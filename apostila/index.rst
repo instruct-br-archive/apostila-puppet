@@ -18,13 +18,13 @@
 
         .. class:: center
         
-        Apostila Puppet Básico versão 1.0
+        Apostila Puppet Básico versão 1.1
 
     .. container::
         
         .. class:: center
         
-        Apostila Puppet Básico versão 1.0
+        Apostila Puppet Básico versão 1.1
 
 .. footer::
 

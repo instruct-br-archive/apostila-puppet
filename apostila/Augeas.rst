@@ -1,5 +1,6 @@
 Augeas
 ======
+
 Muitas vezes precisamos manipular arquivos de configuração e, geralmente, recorremos para soluções simples usando grep, sed, awk ou alguma linguagem de script.
 
 Com isso, tem-se muito trabalho para manipular esses arquivos e o resultado final nunca é flexível ou muito confiável.
