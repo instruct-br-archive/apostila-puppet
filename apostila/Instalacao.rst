@@ -56,7 +56,7 @@ Para instalar o repositório em outras versões do Debian ou Ubuntu, acesse a p�
 
   |dica| **Turbinando o vim**
   
-  Para facilitar a edição de código, caso você utilize o editor vim, ative o plugin que adiciona o suporte a linguagem do Puppet executando os comandos abaixo e não deixe de adicionar a linha **syntax on** no seu ``/home/name_user/.vimrc ou /root/.vimrc``.
+  Para facilitar a edição de código, caso você utilize o editor vim, ative o plugin que adiciona o suporte a linguagem do Puppet executando os comandos abaixo e não deixe de adicionar a linha **syntax on** no seu ``/home/name_user/.vimrc`` ou ``/root/.vimrc``.
   
 ::
 
@@ -89,7 +89,7 @@ Para instalar o repositório em outras versões do Red Hat ou CentOS, acesse a p
 
   |dica| **Turbinando o vim**
   
-  Para facilitar a edição de código, caso você utilize o editor vim, ative o plugin que adiciona o suporte a linguagem do Puppet executando os comandos abaixo e não deixe de adicionar a linha **syntax on** no seu ``/home/name_user/.vimrc ou /root/.vimrc``.
+  Para facilitar a edição de código, caso você utilize o editor vim, ative o plugin que adiciona o suporte a linguagem do Puppet executando os comandos abaixo e não deixe de adicionar a linha **syntax on** no seu ``/home/name_user/.vimrc`` ou ``/root/.vimrc``.
   
 ::
 
