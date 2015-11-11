@@ -1,9 +1,9 @@
-Templates
+TTemplates
 =========
 
 Muitas vezes temos um mesmo serviço ativado em diversas máquinas, mas em um conjunto de máquinas esse serviço precisa ser configurado de uma maneira e, no restante das máquinas, de outra. Assim, cada conjunto de máquinas precisaria de um arquivo de configuração específico, mesmo que esse arquivo tivesse uma ou duas linhas de diferença.
 
-Então, quando fosse necessário atualizar uma opção de configuração que é comum aos dois conjuntos de máquinas, seria necessário atualizar dois arquivos de configuração. Além do cuidado extra de garantir que ambos estivesses corretos.
+Então, quando fosse necessário atualizar uma opção de configuração que é comum aos dois conjuntos de máquinas, seria necessário atualizar dois arquivos de configuração. Além do cuidado extra de garantir que ambos estivessem corretos.
 
 O Puppet tem um recurso de templates, em que podemos usar somente um arquivo de dentro dele. Colocamos uma lógica e valores de variáveis que venham do seu código, tornando a nossa configuração mais robusta.
 
@@ -11,22 +11,15 @@ Vamos usar como exemplo um módulo chamado ``foo``:
 
 ::
 
-  # pwd
-  /etc/puppet/modules
-  
-  # tree foo
-  foo
-  |-- manifests
-  |   `-- init.pp
-  `-- templates
-      `-- foo.conf.erb
+  # cd /etc/puppetlabs/code/environments/production/modules/
+  # mkdir -p foo/manifests
+  # mkdir -p foo/templates
 
-
-Agora o conteúdo do arquivo ``init.pp``:
+Adicione o conteúdo abaixo ao arquivo ``/etc/puppetlabs/code/environments/production/modules/foo/manifests/init.pp``:
 
 .. code-block:: ruby
 
-  # /etc/puppet/modules/foo/manifests/init.pp
+  # vim /etc/puppetlabs/code/environments/production/modules/foo/manifests/init.pp
   class foo {
     $var1 = '123456'
     $var2 = 'bar'
@@ -39,10 +32,11 @@ Agora o conteúdo do arquivo ``init.pp``:
 
 Até aqui nós usávamos o atributo *content* com uma string contendo o que queríamos dentro do arquivo, mas agora estamos usando a função ``template()``, que processa o arquivo ``foo.conf.erb``.
 
+Adicione o conteúdo abaixo ao arquivo ``/etc/puppetlabs/code/environments/production/modules/foo/templates/foo.conf.erb``:
 
 ::
 
-  # /etc/puppet/modules/foo/templates/foo.conf.erb
+  # vim /etc/puppetlabs/code/environments/production/modules/foo/templates/foo.conf.erb
   var1=<%= var1 %>
   var2=<%= var2 %>
   <% if osfamily == 'RedHat' %>
@@ -58,7 +52,7 @@ Repare que as variáveis do manifest estão disponíveis dentro da template, inc
   |nota| **Localização de uma template no sistema de arquivos**
   
   Note que o caminho que deve ser passado para a função ``template()`` deve conter o nome do módulo, seguido do nome do arquivo de template que usaremos.
-  Portanto, ``template('foo/foo.conf.erb')`` significa abrir o arquivo ``/etc/puppet/modules/foo/templates/foo.conf.erb``.
+  Portanto, ``template('foo/foo.conf.erb')`` significa abrir o arquivo ``/etc/puppetlabs/code/environments/production/modules/foo/templates/foo.conf.erb``.
 
 
 Usando o módulo ``foo`` em uma máquina CentOS:
@@ -199,4 +193,3 @@ Prática: usando templates
   Joao j@foo.com
   Edu e@foo.com
   Bia b@foo.com
-
