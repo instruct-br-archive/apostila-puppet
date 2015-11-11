@@ -1,4 +1,4 @@
-TTemplates
+Templates
 =========
 
 Muitas vezes temos um mesmo serviço ativado em diversas máquinas, mas em um conjunto de máquinas esse serviço precisa ser configurado de uma maneira e, no restante das máquinas, de outra. Assim, cada conjunto de máquinas precisaria de um arquivo de configuração específico, mesmo que esse arquivo tivesse uma ou duas linhas de diferença.
@@ -147,7 +147,7 @@ Prática: usando templates
 ::
 
   # pwd
-  /etc/puppet/modules
+  /etc/puppetlabs/code/environments/production/modules/
   
   # mkdir -p motd/{manifests,templates}
 
