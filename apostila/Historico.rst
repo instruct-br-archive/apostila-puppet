@@ -9,8 +9,8 @@ Histórico de mudanças
 Colaboradores
 ---------------------------------------
 
- * Miguel Di Ciurcio Filho => http://instruct.com.br/
+ * Miguel Di Ciurcio Filho => http://instruct.com.br
 
- * Guto Carvalho => http://instruct.com.br/
+ * Guto Carvalho => http://instruct.com.br
 
  * Aécio Pires => http://aeciopires.com
