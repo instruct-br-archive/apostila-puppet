@@ -37,83 +37,80 @@ Exemplo de saída da execução do comando ``facter``:
 ::
 
   # facter
-  architecture => amd64
-  augeasversion => 0.10.0
-  boardmanufacturer => Dell Inc.
-  boardserialnumber => .C75L6M1.
-  facterversion => 1.6.14
-  hardwareisa => unknown
-  hardwaremodel => x86_64
-  hostname => inspiron
-  id => root
-  interfaces => eth0,lo,vboxnet0
-  ipaddress => 192.168.56.1
-  ipaddress_lo => 127.0.0.1
-  ipaddress_vboxnet0 => 192.168.56.1
-  is_virtual => false
-  kernel => Linux
-  kernelmajversion => 3.2
-  kernelrelease => 3.2.0-0.bpo.3-amd64
-  kernelversion => 3.2.0
-  lsbdistcodename => squeeze
-  lsbdistdescription => Debian GNU/Linux 6.0.6 (squeeze)
-  lsbdistid => Debian
-  lsbdistrelease => 6.0.6
-  lsbmajdistrelease => 6
-  macaddress => 00:26:b9:25:76:ef
-  macaddress_eth0 => 00:26:b9:25:76:ef
-  macaddress_vboxnet0 => 0a:00:27:00:00:00
-  manufacturer => Dell Inc.
-  memoryfree => 1.70 GB
-  memorysize => 3.68 GB
-  memorytotal => 3.68 GB
-  netmask => 255.255.255.0
-  netmask_lo => 255.0.0.0
-  netmask_vboxnet0 => 255.255.255.0
-  network_lo => 127.0.0.0
-  network_vboxnet0 => 192.168.56.0
-  operatingsystem => Debian
-  operatingsystemrelease => 6.0.6
-  osfamily => Debian
-  path => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-  physicalprocessorcount => 1
-  processor0 => Intel(R) Core(TM) i3 CPU       M 330  @ 2.13GHz
-  processor1 => Intel(R) Core(TM) i3 CPU       M 330  @ 2.13GHz
-  processor2 => Intel(R) Core(TM) i3 CPU       M 330  @ 2.13GHz
-  processor3 => Intel(R) Core(TM) i3 CPU       M 330  @ 2.13GHz
-  processorcount => 4
-  productname => Inspiron 1564
-  ps => ps -ef
-  puppetversion => 3.0.1
-  rubysitedir => /usr/local/lib/site_ruby/1.8
-  rubyversion => 1.8.7
-  selinux => false
-  serialnumber => C75L6M1
-  sshdsakey => AAAAB3NzaC1kc3MAAACBAJ6Lw5zcJfTkBm6Yp00a8X5XBkYLJtaf ...
-  sshrsakey => AAAAB3NzaC1yc2EAAAADAQABAAABAQDAErKQ92ShklNso4oBUNH6 ...
-  swapfree => 0.00 kB
-  swapsize => 0.00 kB
+  dmi => {
+    bios => {
+      release_date => "12/01/2006",
+      vendor => "innotek GmbH",
+      version => "VirtualBox"
+    },
+    board => {
+      manufacturer => "Oracle Corporation",
+      product => "VirtualBox",
+      serial_number => "0"
+    },
+    manufacturer => "innotek GmbH",
+    product => {
+      name => "VirtualBox",
+      serial_number => "0",
+      uuid => "95E9353C-948D-4D93-A004-536701C2C673"
+    }
+  }
+  memory => {
+    swap => {
+      available => "880.00 MiB",
+      available_bytes => 922742784,
+      capacity => "0%",
+      total => "880.00 MiB",
+      total_bytes => 922742784,
+      used => "0 bytes",
+      used_bytes => 0
+    },
+    system => {
+      available => "670.50 MiB",
+      available_bytes => 703074304,
+      capacity => "11.04%",
+      total => "753.68 MiB",
+      total_bytes => 790290432,
+      used => "83.18 MiB",
+      used_bytes => 87216128
+    }
+  }
+  os => {
+    architecture => "i386",
+    family => "Debian",
+    hardware => "i686",
+    name => "Debian",
+    release => {
+      full => "8.2",
+      major => "8",
+      minor => "2"
+    },
+    selinux => {
+      enabled => false
+    }
+  }
+  system_uptime => {
+    days => 0,
+    hours => 2,
+    seconds => 8416,
+    uptime => "2:20 hours"
+  }
   timezone => BRST
-  type => Portable
-  uniqueid => 007f0101
-  uptime => 34 days
-  uptime_days => 34
-  uptime_hours => 826
-  uptime_seconds => 2973926
-  virtual => physical
+  virtual => virtualbox
+
 
 Todas essas variáveis estão disponíveis para uso dentro de qualquer manifest e dizemos que estão no escopo de topo (*top scope*).
 
-O exemplo abaixo usa algumas das variáveis geradas pelo ``facter``:
+O exemplo abaixo (inserido no arquivo ``/root/manifests/a.pp``) usa algumas das variáveis geradas pelo ``facter``:
 
 .. code-block:: ruby
 
   notify {'kernel':
-    message => "O sistema operacional é ${kernel} e versão ${kernelversion}"
+    message => "O sistema operacional é ${::kernel} e versão ${::kernelversion}"
   }
   
   notify {'distro':
-    message => "A distribuição é ${operatingsystem} e versão ${operatingsystemrelease}"
+    message => "A distribuição é ${::operatingsystem} e versão ${::operatingsystemrelease}"
   }
 
 E teremos a seguinte saída:
@@ -121,13 +118,13 @@ E teremos a seguinte saída:
 ::
 
   # puppet apply a.pp
-  O sistema operacional é Linux e versão 2.6.18
-  /Stage[main]//Notify[kernel]/message: defined 'message' as 'Nosso sistema operacional \
-                é Linux e versão 2.6.18'
-  A distribuição é CentOS e versão 5.8
-  /Stage[main]//Notify[distro]/message: defined 'message' as 'A distribuição é CentOS e \
-                versão 5.8'
-  Finished catalog run in 0.05 seconds
+  Notice: O sistema operacional é Linux e versão 3.16.0
+  Notice: /Stage[main]/Main/Notify[kernel]/message: defined 'message' as \
+     'O sistema operacional é Linux e versão 3.16.0'
+  Notice: A distribuição é Debian e versão 8.2
+  Notice: /Stage[main]/Main/Notify[distro]/message: defined 'message' as \
+     'A distribuição é Debian e versão 8.2'
+  Notice: Applied catalog in 0.03 second
 
 .. nota::
 
@@ -191,7 +188,7 @@ Outro exemplo, usando uma variável do ``facter``:
 
 .. code-block:: ruby
 
-  if $is_virtual == 'true' {
+  if $::is_virtual == true {
     notify {'Estamos em uma maquina virtual': }
   }
   else {
@@ -202,13 +199,13 @@ Os blocos podem conter qualquer qualquer tipo de definição de configuração, 
 
 .. code-block:: ruby
 
-  if $osfamily == 'RedHat' {
+  if $::osfamily == 'RedHat' {
     service {'sshd':
       ensure => 'running',
       enable => 'true',
     }
   }
-  elsif $osfamily == 'Debian' {
+  elsif $::osfamily == 'Debian' {
     service {'ssh':
       ensure => 'running',
       enable => 'true',
@@ -219,13 +216,17 @@ Os blocos podem conter qualquer qualquer tipo de definição de configuração, 
 
   |aviso| **True e False para o Puppet.**
   
-  Quando usamos variáveis que vêm do ``facter``, sempre são strings.
+  No Puppet 3, quando usamos variáveis que vêm do ``facter``, sempre são strings.
   
-  Mesmo que seja retornado *false*, por exemplo, no fato $is_virtual, é diferente do tipo booleano ``false``.
+  Mesmo que seja retornado *false*, por exemplo, no fato $::is_virtual, é diferente do tipo booleano ``false``.
   
   Portanto, um código como o abaixo sempre cairá no primeiro bloco, pois a variável é uma string.
   
-  ``if $is_virtual { ... } else { ... }``
+  ``if $::is_virtual { ... } else { ... }``
+  
+  No Puppet 4.2.x, um código como o abaixo funciona, pois o resultado fato $::is_virtual é do tipo booleano.
+  
+  ``if $::is_virtual { ... } else { ... }``
   
 Expressões
 ``````````
@@ -266,13 +267,15 @@ Além do ``if``, o Puppet fornece a diretiva ``case``.
 
 .. code-block:: ruby
 
-  case $operatingsystem {
+  case $::operatingsystem {
     centos: { $apache = "httpd" }
     redhat: { $apache = "httpd" }
     debian: { $apache = "apache2" }
     ubuntu: { $apache = "apache2" }
     # fail é uma função
-    default: { fail("sistema operacional desconhecido") }
+    default: { 
+      fail("sistema operacional desconhecido") 
+    }
   }
   package {'apache':
     name   => $apache,
@@ -288,11 +291,11 @@ O casamento de strings é *case-insensitive* como o operador de comparação ``=
 
 Expressões regulares devem ser escritas entre barras e são *case sensitive*.
 
-O exemplo anterior, reescrito:
+O exemplo anterior pode ser reescrito assim:
 
 .. code-block:: ruby
 
-  case $operatingsystem {
+  case $::operatingsystem {
     centos, redhat: { $apache = "httpd" }
     debian, ubuntu: { $apache = "apache2" }
     default: { fail("sistema operacional desconhecido") }
@@ -318,7 +321,7 @@ Ao invés de escolher a partir de um bloco, um ``selector`` escolhe seu valor a 
 
 .. code-block:: ruby
 
-  $apache = $operatingsystem ? {
+  $apache = $::operatingsystem ? {
     centos          => 'httpd',
     redhat          => 'httpd',
     /Ubuntu|Debian/ => 'apache2',
@@ -326,7 +329,7 @@ Ao invés de escolher a partir de um bloco, um ``selector`` escolhe seu valor a 
   }
 
 
-O ponto de interrogação assinala ``$operatingsystem`` como o pivô do ``selector``, e o valor final que é atribuído a ``$apache`` é determinado pelo valor corresponde de ``$operatingsystem``.
+O ponto de interrogação assinala ``$operatingsystem`` como o pivô do ``selector``, e o valor final que é atribuído a ``$apache`` é determinado pelo valor corresponde de ``$::operatingsystem``.
 
 Pode parecer um pouco estranho, mas há muitas situações em que é a forma mais concisa de se obter um valor.
 
@@ -341,16 +344,15 @@ Reescreva o código do exemplo usando uma variável para armazenar o nome do ser
     ensure => 'installed',
   }
 
-  if $osfamily == 'RedHat' {
+  if $::osfamily == 'RedHat' {
     service {'ntpd':
       ensure => 'running',
       enable => 'true',
     }
   }
-  elsif $osfamily == 'Debian' {
+  elsif $::osfamily == 'Debian' {
     service {'ntp':
       ensure => 'running',
       enable => 'true',
     }
   }
-
