@@ -24,7 +24,7 @@ Dentro do bloco de código da classe podemos colocar qualquer código Puppet, po
 
 .. code-block:: ruby
 
-  # arquivo ntp.pp
+  # vim ntp.pp
   class ntp {
     package { 'ntp':
       ensure => installed,
@@ -53,7 +53,7 @@ Simplesmente nada aconteceu, pois nós apenas definimos a classe. Para utilizá-
 
 .. code-block:: ruby
 
-  # arquivo ntp.pp
+  # vim ntp.pp
   class ntp {
     package { 'ntp':
       ensure => installed,
@@ -119,7 +119,8 @@ Primeiramente, devemos conhecer de nosso ambiente onde os módulos devem estar l
 ::
 
   # puppet config print modulepath
-  /etc/puppet/modules:/usr/share/puppet/modules
+  /etc/puppetlabs/code/environments/production/modules: \
+    /etc/puppetlabs/code/modules:/opt/puppetlabs/puppet/modules
 
 
 No Puppet, módulos são a união de um ou vários manifests que podem ser reutilizados. O Puppet carrega automaticamente os manifests dos módulos presentes em ``modulepath`` e os torna disponíveis.
@@ -160,7 +161,7 @@ Prática: criando um módulo
 
 ::
 
-  # cd /etc/puppet/modules
+  # cd /etc/puppetlabs/code/environments/production/modules
   # mkdir -p ntp/manifests
 
 .. raw:: pdf
@@ -172,7 +173,7 @@ Prática: criando um módulo
 
 .. code-block:: ruby
 
-  # vim /etc/puppet/modules/ntp/manifests/init.pp
+  # vim /etc/puppetlabs/code/environments/production/modules/ntp/manifests/init.pp
   class ntp {
     package { 'ntp':
       ensure => installed,
@@ -189,7 +190,7 @@ Prática: criando um módulo
 
 .. code-block:: ruby
 
-  # vim /etc/puppet/manifests/site.pp
+  # vim /etc/puppetlabs/code/environments/production/manifests/site.pp
   node 'node1.puppet' {
     include ntp
   }
@@ -209,6 +210,12 @@ Prática: criando um módulo
 
 Agora temos um módulo para configuração de NTP sempre a disposição!
 
+.. nota::
+
+  |nota| **Nome do serviço NTP**
+
+  No Debian/Ubuntu, o nome do serviço é ``ntp``. No CentOS/Red Hat, o nome do serviço é ``ntpd``. Ajuste isso no arquivo ``init.pp`` do módulo ``ntp``.
+
 Prática: arquivos de configuração em módulos
 --------------------------------------------
 
@@ -218,17 +225,16 @@ Além de conter manifests, módulos também podem servir arquivos. Para isso, fa
 
 ::
 
-  # pwd
-  /etc/puppet/modules
+  # cd /etc/puppetlabs/code/environments/production/modules
   # mkdir -p ntp/files
 
 2. Como aplicamos o módulo ntp no *master*, ele terá o arquivo ``/etc/ntp.conf`` disponível. Copie-o:
 
 ::
 
-  # cp /etc/ntp.conf /etc/puppet/modules/ntp/files/
+  # cp /etc/ntp.conf /etc/puppetlabs/code/environments/production/modules/ntp/files/
 
-3. Acrescente ao código da classe ntp em ``/etc/puppet/modules/ntp/manifests/init.pp`` um *resource type* ``file``:
+3. Acrescente  um *resource type* ``file`` ao código da classe ``ntp`` em ``/etc/puppetlabs/code/environments/production/modules/ntp/manifests/init.pp``:
 
 .. code-block:: ruby
 
@@ -257,5 +263,4 @@ Além de conter manifests, módulos também podem servir arquivos. Para isso, fa
 
   |dica| **Servidor de arquivos do Puppet**
 
-  O Puppet pode servir arquivos dos módulos, e funciona da mesma maneira se você está operando de maneira serverless ou master/agente. Todos os arquivos no diretório ``files`` do módulo ntp estão disponíveis na URL ``puppet:///modules/ntp/``.
-
+  O Puppet pode servir arquivos dos módulos, e funciona da mesma maneira se você está operando de maneira serverless ou master/agente. Todos os arquivos no diretório ``files`` do módulo ``ntp`` estão disponíveis na URL ``puppet:///modules/ntp/``.
