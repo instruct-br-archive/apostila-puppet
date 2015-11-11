@@ -1,16 +1,16 @@
 Nodes
 =====
-O Puppet começa a compilação da configuração de um catálogo pelo arquivo ``/etc/puppet/manifests/site.pp``. O ``site.pp`` é o ponto de entrada do master para identificar a configuração que será enviada a um agente.
+O Puppet começa a compilação da configuração de um catálogo pelo arquivo ``/etc/puppetlabs/code/environments/production/manifests/site.pp``. O ``site.pp`` é o ponto de entrada do master para identificar a configuração que será enviada a um agente.
 
 Para saber qual configuração deve ser enviada a um agente, precisamos declarar o hostname do agente, utilizando a diretiva ``node``. Diretivas ``node`` casam sempre com o nome do agente. Por padrão, o nome do agente é o valor de ``certname`` presente no certificado de um agente (por padrão, o FQDN).
 
 Declarando nodes
 ----------------
-Sintaxe para se declarar um node:
+Sintaxe para se declarar um node a partir do master:
 
 .. code-block:: ruby
 
-  # /etc/puppet/manifests/site.pp
+  # vim /etc/puppetlabs/code/environments/production/manifests/site.pp
   
   node 'node1.puppet' {
     package {'nano':
@@ -26,24 +26,15 @@ Sintaxe para se declarar um node:
 
 No exemplo acima, o agente que se identificar como ``node1.puppet`` receberá a ordem de instalar o pacote ``nano``, enquanto  ``node2.puppet`` deverá instalar o pacote ``vim``.
 
-É possível modularizar o arquivo ``site.pp`` usando a diretiva ``import``.
+.. nota::
 
-::
-
-  # /etc/puppet/manifests/site.pp
-      
-  # Importar os arquivos de /etc/puppet/manifests/nodes/
-  # Normalmente cada arquivo tem um node
-  import 'nodes/*.pp'
-      
-  # Importar vários nodes somente de um arquivo
-  import 'nodes.pp'
-  
+  |nota| No Puppet 4.2 não é possível modularizar o arquivo ``site.pp`` usando a diretiva ``import``.
+ 
 .. nota::
 
   |nota| **Classificação de nodes**
   
-  O Puppet fornece um recurso chamado *External Node Classifier* (ENC), que tem a finalidade de delegar o registro de nodes para uma entidade externa, evitando a configuração de longos manifests. Esse recurso será visto mais adiante.
+  O Puppet fornece um recurso chamado *External Node Classifier* (ENC), que tem a finalidade de delegar o registro de nodes para uma entidade externa, evitando a configuração de longos manifests. Esse recurso será visto mais adiante. A documentação oficial está na página: https://docs.puppetlabs.com/guides/external_nodes.html
 
 Nomes
 -----
@@ -83,7 +74,8 @@ Caso o Puppet Master não encontre nenhuma declaração de ``node`` explícita p
 
 Herança
 -------
-É possível utilizar um mecanismo de herança para a declaração de nodes usando a diretiva ``inherits`` da seguinte maneira:
+
+A partir do Puppet 4.0 não é possível utilizar o mecanismo de herança para a declaração de nodes através da diretiva ``inherits``. Sendo assim, o código abaixo não é mais suportado a partir do Puppet 4.0:
 
 .. code-block:: ruby
 
@@ -99,12 +91,6 @@ Herança
     }
   }
 
-.. aviso::
-
-  |aviso| **Cuidados quanto ao uso de herança de nodes**
-  
-  Apesar de aparentemente atrativo, recomenda-se evitar usar herança em nodes. Em caso de necessidade de refatorar seu código ou criar exceções para máquinas que irão divergir de um node pai, seu código ficará complicado e de difícil entendimento.
-
 Prática
 -------
 
@@ -119,4 +105,3 @@ Prática
   |dica| **Simulando a configuração**
 
   Para simularmos as alterações que serão ou não feitas, usamos ``puppet agent -t --noop``.
-
