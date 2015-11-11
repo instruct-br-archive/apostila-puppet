@@ -3,21 +3,21 @@ Ordenação
 
 Agora que entendemos manifests e declaração de recursos, vamos aprender sobre meta-parâmetros e ordenação de recursos.
 
-Voltemos ao *manifest* anterior que criou um arquivo, um diretório e um link simbólico:
+Voltemos ao *manifest* ``/root/manifests/arquivo-2.pp``, que criou um arquivo, um diretório e um link simbólico:
 
 .. code-block:: ruby
 
-  file {'/tmp/teste1.txt':
+  file { '/tmp/teste1.txt':
     ensure  => present,
     content => "Ola!\n",
   }
 
-  file {'/tmp/teste2':
+  file { '/tmp/teste2':
     ensure => directory,
     mode   => 0644,
   }
 
-  file {'/tmp/teste3.txt':
+  file { '/tmp/teste3.txt':
     ensure => link,
     target => '/tmp/teste1.txt',
   }
@@ -37,12 +37,12 @@ Meta-parâmetros e referência a recursos
 
 .. code-block:: ruby
 
-  file {'/tmp/teste1.txt':
+  file { '/tmp/teste1.txt':
     ensure  => present,
     content => "Ola!\n",
   }
   
-  notify {'/tmp/teste1.txt foi sincronizado.':
+  notify { '/tmp/teste1.txt foi sincronizado.':
     require => File['/tmp/teste1.txt'],
   }
 
@@ -76,9 +76,9 @@ Esses dois meta-parâmetros são apenas duas maneiras diferentes de escrever a m
 
 .. code-block:: ruby
 
-  file {'/tmp/teste1.txt':
+  file { '/tmp/teste1.txt':
     ensure  => present,
-    content => "Olah!\n",
+    content => "Ola!\n",
     before  => Notify['mensagem'],
   }
 
@@ -90,9 +90,9 @@ No exemplo acima, após ``/tmp/teste1.txt`` ser criado acontece a notificação.
 
 .. code-block:: ruby
 
-  file {'/tmp/teste1.txt':
+  file { '/tmp/teste1.txt':
     ensure  => present,
-    content => "Olah!\n",
+    content => "Ola!\n",
   }
 
   notify {'mensagem':
@@ -104,9 +104,9 @@ Meta-parâmetros notify e subscribe
 ``````````````````````````````````
 Alguns tipos de resources podem ser *refreshed* (refrescados, recarregados), ou seja, devem reagir quando houver mudanças.
 
-Por resource ``service``, significa reiniciar ou recarregar após um arquivo de configuração modificado.
+Para um resource ``service``, significa reiniciar ou recarregar após um arquivo de configuração modificado.
 
-Para um resource ``exec`` significa ser executado toda vez que o resource seja modificado.
+Para um resource ``exec``, significa ser executado toda vez que o resource for modificado.
 
 
 .. aviso::
@@ -119,7 +119,7 @@ Para um resource ``exec`` significa ser executado toda vez que o resource seja m
 
 Os meta-parâmetros *notify* e *subscribe* estabelecem relações de dependência da mesma maneira que *before* e *require*, mas para relações de refresh.
 
-Não só o *resource* anterior será sincronizado, como após a sincronização um evento ``refresh`` será gerado, e o *resource* deverá reagir de acordo.
+Não só o *resource* anterior será sincronizado, como após a sincronização será gerado um evento ``refresh`` e o *resource* deverá reagir de acordo.
 
 .. nota::
 
@@ -133,7 +133,7 @@ No exemplo abaixo, toda vez que o arquivo ``/etc/ssh/sshd_config`` divergir de `
 
   file { '/etc/ssh/sshd_config':
     ensure => file,
-    mode   => 600,
+    mode   => '600',
     source => '/root/manifests/sshd_config',
     notify => Service['sshd'],
   }
@@ -176,7 +176,7 @@ Para essa atividade, salve o conteúdo de cada exercício em um arquivo ``.pp`` 
 
 .. code-block:: ruby
 
-  package {'sudo':
+  package { 'sudo':
     ensure => 'installed'
   }
 
@@ -184,16 +184,16 @@ Para essa atividade, salve o conteúdo de cada exercício em um arquivo ``.pp`` 
 
 .. code-block:: ruby
 
-  package {'sudo':
+  package { 'sudo':
     ensure => 'installed'
   }
   
-  file {'/etc/sudoers':
-    ensure => 'file',
-    mode => 0440,
-    owner => 'root',
-    group => 'root',
-    source => '/root/manifests/sudoers',
+  file { '/etc/sudoers':
+    ensure  => 'file',
+    mode    => '0440',
+    owner   => 'root',
+    group   => 'root',
+    source  => '/root/manifests/sudoers',
     require => Package['sudo']
   }
 
@@ -203,20 +203,20 @@ Para essa atividade, salve o conteúdo de cada exercício em um arquivo ``.pp`` 
 
 .. code-block:: ruby
 
-  package {'sudo':
+  package { 'sudo':
     ensure => 'installed'
   }
   
-  file {'/etc/sudoers':
-    ensure => 'file',
-    mode => 0440,
-    owner => 'root',
-    group => 'root',
-    source => '/root/manifests/sudoers',
+  file { '/etc/sudoers':
+    ensure  => 'file',
+    mode    => '0440',
+    owner   => 'root',
+    group   => 'root',
+    source  => '/root/manifests/sudoers',
     require => [Package['sudo'], Exec['parse_sudoers']],
   }
   
-  exec {'parse_sudoers':
+  exec { 'parse_sudoers':
     command => '/usr/sbin/visudo -c -f /root/manifests/sudoers',
     require => Package['sudo'],
   }
@@ -231,17 +231,16 @@ Para essa atividade, salve o conteúdo de cada exercício em um arquivo ``.pp`` 
   }
   
   file {'/etc/sudoers':
-    ensure => 'file',
-    mode => 0440,
-    owner => 'root',
-    group => 'root',
-    source => '/root/manifests/sudoers',
+    ensure  => 'file',
+    mode    => '0440',
+    owner   => 'root',
+    group   => 'root',
+    source  => '/root/manifests/sudoers',
     require => [Package['sudo'], Exec['parse_sudoers']],
   }
   
   exec {'parse_sudoers':
     command => '/usr/sbin/visudo -c -f /root/manifests/sudoers',
-    unless => '/usr/bin/diff /root/manifests/sudoers /etc/sudoers',
+    unless  => '/usr/bin/diff /root/manifests/sudoers /etc/sudoers',
     require => Package['sudo'],
   } 
-
