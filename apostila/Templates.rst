@@ -37,9 +37,10 @@ Adicione o conteúdo abaixo ao arquivo ``/etc/puppetlabs/code/environments/produ
 ::
 
   # vim /etc/puppetlabs/code/environments/production/modules/foo/templates/foo.conf.erb
-  var1=<%= var1 %>
-  var2=<%= var2 %>
-  <% if osfamily == 'RedHat' %>
+  var1=<%= @var1 %>
+  var2=<%= @var2 %>
+  
+  <% if @osfamily == 'RedHat' %>
   var3=RedHat
   <% else %>
   var3=Outro
@@ -52,7 +53,8 @@ Repare que as variáveis do manifest estão disponíveis dentro da template, inc
   |nota| **Localização de uma template no sistema de arquivos**
   
   Note que o caminho que deve ser passado para a função ``template()`` deve conter o nome do módulo, seguido do nome do arquivo de template que usaremos.
-  Portanto, ``template('foo/foo.conf.erb')`` significa abrir o arquivo ``/etc/puppetlabs/code/environments/production/modules/foo/templates/foo.conf.erb``.
+  Portanto, ``template('foo/foo.conf.erb')`` significa abrir o arquivo
+  ``/etc/puppetlabs/code/environments/production/modules/foo/templates/foo.conf.erb``.
 
 
 Usando o módulo ``foo`` em uma máquina CentOS:
@@ -94,7 +96,7 @@ Um arquivo de template no Puppet usa a sintaxe ERB, que é a linguagem padrão d
 
 ::
 
-  <%= qualquer_variavel %>
+  <%= @qualquer_variavel %>
 
 .. raw:: pdf
 
@@ -104,24 +106,24 @@ Um arquivo de template no Puppet usa a sintaxe ERB, que é a linguagem padrão d
 
 ::
 
-  <% if var != "foo" %>
-  <%= var %> is not foo!
+  <% if @var1 != "foo" %>
+  <%= @var1 %> is not foo!
   <% end %>
 
 * Verificar se uma variável existe:
 
 ::
 
-  <% if boardmanufacturer then %>
-    Essa maquina é do fabricante type: <%= boardmanufacturer %>
+  <% if @boardmanufacturer then %>
+    Essa maquina é do fabricante type: <%= @boardmanufacturer %>
   <% end %>
 
 * Iteração em um array chamado **bar**:
 
 ::
 
-  <% bar.each do |val| %> 
-     Valor: <%= val %> 
+  <% @bar.each do |val| %>
+  Valor: <%= val %> 
   <% end %>
 
 .. dica::
@@ -134,26 +136,34 @@ Um arquivo de template no Puppet usa a sintaxe ERB, que é a linguagem padrão d
   
   1. Colocar todo o código em apenas uma linha, assim o arquivo final não conterá linhas em branco:
   
-  ``<% if osfamily == 'RedHat' %>var3=RedHat<% else %>var3=Outro<% end %>``, 
+  ``<% if @osfamily == 'RedHat' %>var3=RedHat<% else %>var3=Outro<% end %>``, 
 
   2. A outra opção é colocar um hífen no final de cada tag, assim o ERB não retornará uma linha em branco:
   
-  ``<% if osfamily == '!RedHat' -%>``
+  ``<% if @osfamily == '!RedHat' -%>``
 
+
+.. dica::
+
+  |dica| **Mais informações sobre a sintaxe ERB**
+
+  Para saber mais detalhes sobre a sintaxe ERB, acesse a página abaixo.
+  
+  https://docs.puppetlabs.com/puppet/latest/reference/lang_template_erb.html
+  
+  Para saber mais detalhes sobre o uso de linguagens para manipulação de templates no Puppet, acesse a página abaixo.
+  
+  https://docs.puppetlabs.com/puppet/latest/reference/lang_template.html
+  
+  
 Prática: usando templates
 -------------------------
 1. Crie a estrutura básica de um módulo chamado ``motd``:
 
 ::
 
-  # pwd
-  /etc/puppetlabs/code/environments/production/modules/
-  
+  # cd /etc/puppetlabs/code/environments/production/modules/
   # mkdir -p motd/{manifests,templates}
-
-.. raw:: pdf
-
- PageBreak
 
 2. Defina a classe motd em ``motd/manifests/init.pp``, conforme o código abaixo:
 
@@ -163,7 +173,7 @@ Prática: usando templates
     $admins = ['Joao j@foo.com', 'Edu e@foo.com', 'Bia b@foo.com']
     file {'/etc/motd':
       ensure  => 'file',
-      mode    => 644,
+      mode    => "644",
       content => template("motd/motd.erb"),
     }
   }
@@ -172,16 +182,20 @@ Prática: usando templates
 
 ::
 
-  Bem vindo a <%= fqdn -%> - <%= operatingsystem -%> <%= operatingsystemrelease %>
-  
-  Kernel: <%= kernel -%> <%= kernelversion %>
-  
+  Bem vindo a <%= @fqdn -%> - <%= @operatingsystem -%> <%= @operatingsystemrelease %>
+
+  Kernel: <%= @kernel -%> <%= @kernelversion %>
+
   Em caso de problemas, falar com:
-  <% admins.each do |adm| -%>
+  <% @admins.each do |adm| -%>
   <%= adm %>
   <% end -%>
 
-4. Use o módulo no **node1**, execute o agente e confira o resultado:
+.. raw:: pdf
+
+ PageBreak
+ 
+4. Use o módulo no **node1**, execute o agente e confira o resultado no arquivo ``/etc/motd``:
 
 ::
 
