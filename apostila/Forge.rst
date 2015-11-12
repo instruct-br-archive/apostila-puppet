@@ -2,7 +2,7 @@ Puppet Forge
 ============
 Ao longo da história da computação, programadores desenvolveram diversas técnicas para evitar retrabalho. Estão disponíveis aos programadores bibliotecas de código que implementam diversas funcionalidades prontas para uso. Além disso, ao desenvolver um software, certamente um programador competente concentra rotinas repetidas ou parecidas em bibliotecas que podem ser reutilizadas no seu projeto.
 
-Infelizmente, no mundo da administração de sistemas aproveitar, problemas que já foram resolvidos por outro administrador é muito raro. SysAdmins de diferentes organizações estão resolvendo os mesmos problemas todos os dias. Configurando e instalando servidores web, banco de dados, fazendo ajustes de segurança e etc.
+Infelizmente, no mundo da administração de sistemas, aproveitar soluções de problemas que já foram resolvidos por outro administrador é muito raro. SysAdmins de diferentes organizações estão resolvendo os mesmos problemas todos os dias. Configurando e instalando servidores web, banco de dados, fazendo ajustes de segurança e etc.
 
 Não seria incrível se os SysAdmins pudessem aproveitar o trabalho uns dos outros? Para isso o Puppet Forge foi criado!
 
@@ -18,33 +18,41 @@ Poderíamos criar um módulo para que essas configurações fossem gerenciadas v
 
 ::
 
-  # pwd
-  /etc/puppet/modules
+  # cd /etc/puppetlabs/code/environments/production/modules
 
   # puppet module search sysctl
-  Searching https://forge.puppetlabs.com ...
-  NAME                      DESCRIPTION                                                 AUTHOR             KEYWORDS                     
-  erwbgy-system             Manage Linux system resources and services from hiera c...  @erwbgy            sshd Group sysctl host user  
-  kickstandproject-sysctl                                                               @kickstandproject  ubuntu sysctl                
-  trlinkin-sysctl           This module adds a sysctl type and provider                 @trlinkin          type linux bsd sysctl mac    
-  fiddyspence-sysctl        Puppet module for managing kernel runtime parameters        @fiddyspence       linux kernel sysctl          
-  thias-sysctl              Manage sysctl variable values.                              @thias             sysctl CentOS os rhel        
-  domcleal-augeasproviders  # Alternative Augeas-based providers for Puppet             @domcleal          sysctl mail sshd nrpe ssh    
-  ghoneycutt-sysctl         manage /etc/sysctl.conf                                     @ghoneycutt        sysctl tuning                
-  duritong-sysctl           This modules allows you to configure sysctl.                @duritong          sysctl                       
+  Notice: Searching https://forgeapi.puppetlabs.com ...
+  NAME                                 DESCRIPTION                                               AUTHOR             KEYWORDS                    
+  duritong-sysctl                      This modules allows you to configure sysctl.              @duritong          sysctl                      
+  ULHPC-sysctl                         Configure and manage sysctl                               @ULHPC             os sysctl kernel parameters 
+  halyard-sysctl                       Sysctl module                                             @halyard           os sysctl                   
+  fiddyspence-sysctl                   sysctl type and provider                                  @fiddyspence       sysctl kernel parameters    
+  thias-sysctl                         Sysctl module                                             @thias             os sysctl                   
+  example42-sysctl                     Puppet module for sysctl                                  @example42         sysctl example42            
+  trlinkin-sysctl                      Control Sysctl entries on UNIX systems.                   @trlinkin          os sysctl type mac linux bsd
+  kickstandproject-sysctl              UNKNOWN                                                   @kickstandproject  ubuntu sysctl               
+  a2labs-sysctl                        Configure sysctl settings on Ubuntu                       @a2labs                                        
+  a2tar-sysctl                         Puppet sysctl editor for ubuntu                           @a2tar             ubuntu sysctl               
+  Flameeyes-sysctl                     Cross-distributions sysctl handling                       @Flameeyes         ubuntu sysctl centos gentoo 
+  eliasp-sysctl                        Cross-distributions sysctl handling                       @eliasp            ubuntu centos gentoo        
+  lgbarn-sysctl                        Module to control sysctl entries                          @lgbarn                                        
+  herculesteam-augeasproviders_sysctl  Augeas-based sysctl type and provider for Puppet          @herculesteam      sysctl augeas types         
+  greatboy-bs_sysctl                   A puppet module which manage /etc/sysctl.conf file.       @greatboy                                      
+  thias-tuned                          Tuned adaptive system tuning daemon module                @thias             sysctl tuned                
+  domcleal-augeasproviders             Alternative Augeas-based providers for Puppet             @domcleal          mail ssh sysctl nrpe sshd   
+  ffollonier-wrappers                  Puppet Module for wrapping defined types from several...  @ffollonier        nginx sysctl php jboss      
+  erwbgy-system                        Manage Linux system resources and services from hiera...  @erwbgy            ntp sysctl rhel cron sshd                      
 
 2. Já existem vários módulos para tratar esse problema. Vamos instalar um deles (já testado anteriormente, por isso a escolha):
 
 ::
 
-  # pwd
-  /etc/puppet/modules
   # puppet module install trlinkin/sysctl
-  Preparing to install into /etc/puppet/modules ...
-  Downloading from https://forge.puppetlabs.com ...
-  Installing -- do not interrupt ...
-  /etc/puppet/modules
-  |---trlinkin-sysctl (v0.0.1)
+  Notice: Preparing to install into /etc/puppetlabs/code/environments/production/modules ...
+  Notice: Downloading from https://forgeapi.puppetlabs.com ...
+  Notice: Installing -- do not interrupt ...
+  /etc/puppetlabs/code/environments/desenv/modules
+  |--- trlinkin-sysctl (v0.0.2)
 
 3. Usando o módulo, via linha de comando:
 
@@ -91,16 +99,14 @@ Prática: módulo para autofsck do Puppet Forge
 
 ::
 
-  # pwd
-  /etc/puppet/modules
-
+  # cd /etc/puppetlabs/code/environments/production/modules
   # puppet module install jhoblitt/autofsck
-  Preparing to install into /etc/puppet/modules ...
-  Downloading from https://forge.puppetlabs.com ...
-  Installing -- do not interrupt ...
-  /etc/puppet/modules
-  |-- jhoblitt-autofsck (v1.0.0)
-    |-- puppetlabs-stdlib (v3.1.1)
+  Notice: Preparing to install into /etc/puppetlabs/code/environments/production/modules ...
+  Notice: Downloading from https://forgeapi.puppetlabs.com ...
+  Notice: Installing -- do not interrupt ...
+  /etc/puppetlabs/code/environments/desenv/modules
+  |--| jhoblitt-autofsck (v1.1.0)
+  |--- puppetlabs-stdlib (v4.9.0)
 
 2. Declare o módulo ``autofsck`` na configuração de **node1**:
 
@@ -115,4 +121,3 @@ Prática: módulo para autofsck do Puppet Forge
 ::
 
   # puppet agent -t
-
