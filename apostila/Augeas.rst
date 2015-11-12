@@ -5,21 +5,32 @@ Muitas vezes precisamos manipular arquivos de configuração e, geralmente, reco
 
 Com isso, tem-se muito trabalho para manipular esses arquivos e o resultado final nunca é flexível ou muito confiável.
 
-O Augeas é uma ferramenta para edição segura de arquivos de configuração, que analisa arquivos de configuração em seus formatos nativos e os transforma em uma árvore. As alterações são feitas manipulando essa árvore e salvando-a de volta ao formato nativo do arquivo de configuração. Usando o Augeas ficamos livres de problemas como tratar linhas em branco ou com comentários.
+O Augeas é uma ferramenta para edição segura de arquivos de configuração, que analisa os arquivos de configuração em seus formatos nativos e os transforma em uma árvore. As alterações são feitas manipulando essa árvore e salvando-a de volta ao formato nativo do arquivo de configuração. Usando o Augeas ficamos livres de problemas como tratar linhas em branco ou com comentários.
 
 Para dar suporte a diversos formatos de arquivos de configuração, o Augeas usa o que ele chama de *Lenses* (lentes). Uma lente é um registro de como um arquivo de configuração deve ser suportado pelo Augeas, e atualmente são suportados mais de 100 formatos diferentes.
 
 Usando o Augeas
 ---------------
 
-O comando ``augtool`` é um pequeno interpretador de comandos e, através dele, podemos manipular de diversas formas arquivos de configuração.
+O comando ``augtool`` é um pequeno interpretador de comandos e, através dele, podemos manipular de diversas formas arquivos de configuração. Ele ficará disponível na sua distro após a execução do comando abaixo.
+
+* No Debian 8/Ubuntu 14.04
+
+::
+
+  # puppet resource package augeas-tools ensure=present
+  
+* CentOS 7 / Red Hat 7
+
+::
+
+  # puppet resource package augeas ensure=present
 
 Vejamos como o arquivo ``/etc/resolv.conf`` está configurado:
 
 ::
 
   # cat /etc/resolv.conf
-  cat /etc/resolv.conf 
   domain puppet
   search puppet
   nameserver 8.8.8.8
@@ -105,7 +116,7 @@ Os comandos abaixo podem ser executados na máquina **node1.puppet**.
   nameserver[1] = 8.8.8.8
   nameserver[2] = 8.8.4.4
 
-3. Use o comando ``print`` no arquivo ``/etc/hosts``. Identifique qual é o número do registro do host **sandbox.puppet**.
+3. Use o comando ``print`` no arquivo ``/etc/hosts``. Identifique qual é o número do registro do host **node1.puppet**.
 
 ::
 
@@ -164,4 +175,3 @@ Garante que o servidor esteja sempre no runlevel correto:
       "set id/runlevels 3",
     ],
   }
-
