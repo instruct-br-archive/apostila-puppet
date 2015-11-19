@@ -161,7 +161,7 @@ Teremos a seguinte estrutura em ``/etc/puppet``:
   Nas páginas abaixo você encontra mais detalhes sobre os arquivos de configuração do puppet.
   
   https://docs.puppetlabs.com/puppet/latest/reference/config_important_settings.html
-  https://docs.puppetlabs.com/puppet/4.2/reference/dirs_confdir.html
+  https://docs.puppetlabs.com/puppet/latest/reference/dirs_confdir.html
   https://docs.puppetlabs.com/puppet/latest/reference/config_about_settings.html
   https://docs.puppetlabs.com/puppet/latest/reference/config_file_main.html
   https://docs.puppetlabs.com/references/latest/configuration.html
@@ -172,7 +172,7 @@ Teremos a seguinte estrutura em ``/etc/puppet``:
 
   |nota| **Sobre os binários do Puppet**
   
-  Os binários e libs do Puppet 4.2 ficam, por padrão, dentro do diretório ``/opt/puppetlabs/bin/``.
+  Os binários e libs do Puppet 4.x ficam, por padrão, dentro do diretório ``/opt/puppetlabs/bin/``.
   Os arquivos de configuração ficam, por padrão, dentro do diretório ``/etc/puppetlabs/``.
   
 .. raw:: pdf
