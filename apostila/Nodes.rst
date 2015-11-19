@@ -28,7 +28,7 @@ No exemplo acima, o agente que se identificar como ``node1.puppet`` receberá a 
 
 .. nota::
 
-  |nota| No Puppet 4.2 não é possível modularizar o arquivo ``site.pp`` usando a diretiva ``import``.
+  |nota| No Puppet 4.3 não é possível modularizar o arquivo ``site.pp`` usando a diretiva ``import``.
  
 .. nota::
 
