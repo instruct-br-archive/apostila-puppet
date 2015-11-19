@@ -196,7 +196,7 @@ Altere as configurações de memória do Java a ser usado pelo Puppet.
   
   JAVA_ARGS="-Xms512m -Xmx512m -XX:MaxPermSize=256m"
  
-Com esta configuração, será alocado  512 MB (no máxímo) e 256 MB (no mínimo) para  uso exclusivo da JVM (Java Virtual Machine) usada pelo PuppetServer.
+Com esta configuração, será alocado  512 MB (no máximo) e 256 MB (no mínimo) para  uso exclusivo da JVM (Java Virtual Machine) usada pelo PuppetServer.
 
 3. Iniciando o serviço:
 
