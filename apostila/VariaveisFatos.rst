@@ -224,7 +224,7 @@ Os blocos podem conter qualquer qualquer tipo de definição de configuração, 
   
   ``if $::is_virtual { ... } else { ... }``
   
-  No Puppet 4.2.x, um código como o abaixo funciona, pois o resultado fato $::is_virtual é do tipo booleano.
+  No Puppet 4.3.x, um código como o abaixo funciona, pois o resultado fato $::is_virtual é do tipo booleano.
   
   ``if $::is_virtual { ... } else { ... }``
   
