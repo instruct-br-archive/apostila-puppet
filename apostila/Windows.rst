@@ -13,7 +13,7 @@ Essa prática é realizada usando o **master.puppet** e uma nova máquina com o 
   |nota| **Download do Puppet para Windows**
 
   O instalador do Puppet para Windows está disponível na página abaixo:
-  https://downloads.puppetlabs.com/windows/?_ga=1.32667512.73514044.1445440199
+  https://downloads.puppetlabs.com/windows/
   
   Nas páginas abaixo você encontra a documentação completa para usar o Puppet no Windows.
   
@@ -24,8 +24,8 @@ Essa prática é realizada usando o **master.puppet** e uma nova máquina com o 
 
 1. Faça login na máquina **win7.puppet**. Baixe o instalador do Puppet-Agent na seguinte URL. 
 
-Se 32 bits: https://downloads.puppetlabs.com/windows/puppet-agent-1.2.7-x86.msi
-Se 64 bits: https://downloads.puppetlabs.com/windows/puppet-agent-1.2.7-x64.msi
+Se 32 bits: https://downloads.puppetlabs.com/windows/puppet-agent-1.3.0-x86.msi
+Se 64 bits: https://downloads.puppetlabs.com/windows/puppet-agent-1.3.0-x64.msi
 
 2. Instale o pacote. Depois de aceitar a licença do Puppet, aparecerá a tela de Configuração, abaixo, perguntando qual é o servidor master, preencha com **master.puppet**.
 
