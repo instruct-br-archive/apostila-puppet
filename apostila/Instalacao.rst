@@ -8,7 +8,7 @@ Existem duas versões do Puppet distribuídas pela PuppetLabs: *Puppet Open Sour
 é distribuído gratuitamente para o gerenciamento de até 10 nodes, possui suporte oficial e vem acompanhado de uma versátil
 interface web para administração.
 
-Para uma comparação mais detalhada sobre as diferenças entre a versão Open Source e a Enterprise, visite a página http://puppetlabs.com/puppet/enterprise-vs-open-source/.
+Para uma comparação mais detalhada sobre as diferenças entre a versão Open Source e a Enterprise, visite as páginas: https://puppetlabs.com/puppet/enterprise-and-open-source e https://puppetlabs.com/puppet/faq .
 
 .. aviso::
 
@@ -20,48 +20,77 @@ Para uma comparação mais detalhada sobre as diferenças entre a versão Open S
 
 Debian e Ubuntu
 ---------------
-* Debian 7 Wheezy
 
-* Ubuntu LTS 10.04 e 12.04
+1. Adicionando o repositório da PuppetLabs:
 
-1. Baixe e instale o pacote puppetlabs-release-\*.deb para a versão da sua distro em http://apt.puppetlabs.com/, por exemplo Debian Wheezy.
+* Debian 8.x (Jessie)
 
 ::
 
-  # wget http://apt.puppetlabs.com/puppetlabs-release-wheezy.deb
-  # dpkg -i puppetlabs-release-wheezy.deb
+  # cd /tmp
+  # wget http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb
+  # dpkg -i  puppetlabs-release-pc1-jessie.deb
   # apt-get update
 
-
-2. Instale o pacote **puppet**.
+* Ubuntu 14.04.x LTS (Trusty)
 
 ::
 
-  # apt-get install puppet
+  # cd /tmp
+  # wget http://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb
+  # dpkg -i puppetlabs-release-pc1-trusty.deb
+  # apt-get update
 
+Para instalar o repositório em outras versões do Debian ou Ubuntu, acesse a página http://apt.puppetlabs.com/ e baixe o pacote puppetlabs-release-pc1-SOBRENOME_DISTRO.deb. Por exemplo, o sobrenome do Debian 7 é Wheezy. Logo, o pacote seria puppetlabs-release-pc1-wheezy.deb.
+
+2. Instale o pacote **puppet-agent**.
+
+::
+
+  # apt-get -y install puppet-agent
+  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bash.bashrc
+  # echo "export PATH" >> /etc/bash.bashrc
+  # export PATH=/opt/puppetlabs/bin:$PATH
 
 .. dica::
 
   |dica| **Turbinando o vim**
   
-  Para facilitar a edição de código, caso você utilize o editor **vim**, ative o plugin que adiciona o suporte a linguagem do Puppet executando ``vim-addons install puppet`` e não deixe de colocar **syntax on** no seu ``.vimrc``.
+  Para facilitar a edição de código, caso você utilize o editor vim, ative o plugin que adiciona o suporte a linguagem do Puppet executando os comandos abaixo e não deixe de adicionar a linha **syntax on** no seu ``/home/name_user/.vimrc`` ou ``/root/.vimrc``.
+  
+::
 
-Red Hat / CentOS
+  # apt-get -y install vim vim-addon-manager vim-puppet
+  # vim-addons install puppet
+  
+Red Hat e CentOS
 ----------------
-* Red Hat 5 e 6
-* CentOS 5 e 6
-* Fedora 19 e 20
 
-1. Baixe e instale o pacote puppetlabs-release-\*.rpm para a versão da sua distro em http://yum.puppetlabs.com/, por exemplo para RHEL/CentOS 6:
+1. Adicionando o repositório da PuppetLabs:
 
-::
-
-  # yum install http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
-  # yum update
-
-2. Instale o pacote **puppet**.
+* Red Hat 7.x / CentOS 7.x
 
 ::
 
-  # yum install puppet
+  # yum install -y http://yum.puppetlabs.com/el/7/PC1/x86_64/puppetlabs-release-pc1-0.9.2-1.el7.noarch.rpm
 
+Para instalar o repositório em outras versões do Red Hat ou CentOS, acesse a página http://yum.puppetlabs.com/el/ e localize o pacote adequado para a sua distro, para instalar conforme o exemplo mostrado acima.
+
+2. Instale o pacote **puppet-agent**.
+
+::
+
+  # yum -y install puppet-agent
+  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bashrc
+  # echo "export PATH" >> /etc/bashrc
+  # export PATH=/opt/puppetlabs/bin:$PATH
+
+.. dica::
+
+  |dica| **Turbinando o vim**
+  
+  Para facilitar a edição de código, caso você utilize o editor vim, ative o plugin que adiciona o suporte a linguagem do Puppet executando o comando abaixo e não deixe de adicionar a linha **syntax on** no seu ``/home/name_user/.vimrc`` ou ``/root/.vimrc``.
+  
+::
+
+  # yum -y install vim vim-puppet

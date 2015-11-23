@@ -18,13 +18,13 @@
 
         .. class:: center
         
-        Apostila Puppet Básico versão 1.0
+        Apostila Puppet Básico versão 1.1
 
     .. container::
         
         .. class:: center
         
-        Apostila Puppet Básico versão 1.0
+        Apostila Puppet Básico versão 1.1
 
 .. footer::
 
@@ -65,8 +65,8 @@
 
 .. include:: Licenca.rst
 .. include:: Sobre.rst
-.. .. include:: GerenciamentoDeConfiguracao.rst
-.. .. include:: IntroducaoPuppet.rst
+.. include:: GerenciamentoDeConfiguracao.rst
+.. include:: IntroducaoPuppet.rst
 .. include:: Instalacao.rst
 .. include:: RAL.rst
 .. include:: Manifests.rst
@@ -76,13 +76,11 @@
 .. include:: MasterAgent.rst
 .. include:: Nodes.rst
 .. include:: Modulos.rst
-.. .. include:: Forge.rst
+.. include:: Forge.rst
 .. include:: Templates.rst
 .. .. include:: Lab2.rst
 .. .. include:: ENCs.rst
-.. .. include:: Augeas.rst
-.. .. include:: Windows.rst
-.. .. include:: Environments.rst
+.. include:: Augeas.rst
+.. include:: Windows.rst
+.. include:: Environments.rst
 .. include:: Historico.rst
-
-

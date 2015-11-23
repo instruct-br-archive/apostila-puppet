@@ -89,4 +89,3 @@ Além disso, quando estamos desenvolvendo um Shell Script, nos desprendemos de d
 * Portáveis? O mesmo script funciona em todos os sistemas do seu ambiente? (Você tem muita sorte se todos os seus sistemas são idênticos)
 
 Diante de todos esses problemas, é necessário evoluir. Para isso, precisamos quebrar paradigmas.
-

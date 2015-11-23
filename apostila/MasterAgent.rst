@@ -30,15 +30,15 @@ Para verificar a configuração de seu sistema, utilize o comando ``hostname``. 
 
 .. dica::
 
-  |dica| **Configuração de hostname no Red Hat/Cent e Debian/Ubuntu**
+  |dica| **Configuração de hostname no Red Hat/CentOS e Debian/Ubuntu**
   
-  Para resolução de nomes, configurar corretamente o arquivo ``/etc/resolv.conf`` com os parâmetros ``domain`` e ``search`` com o domínio de sua rede.
+  Para resolução de nomes, configure corretamente o arquivo ``/etc/resolv.conf`` com os parâmetros ``domain`` e ``search`` com o domínio de sua rede.
   
-  O arquivo ``/etc/hosts`` deve possuir pelo menos o nome da própria máquina, com seu IP, FQDN e depois o hostname: ``192.168.1.10 node1.puppet node1``.
+  O arquivo ``/etc/hosts`` deve possuir pelo menos o nome da própria máquina, com seu IP, FQDN e depois o hostname. Exemplo: ``192.168.1.10 node1.puppet node1``.
   
-  No Debian, colocar apenas o hostname no arquivo ``/etc/hostname``.
+  No Debian, coloque apenas o hostname no arquivo ``/etc/hostname``.
   
-  No CentOS, em ``/etc/sysconfig/network``, ajuste o valor da variável ``HOSTNAME``.
+  No CentOS, ajuste o valor da variável ``HOSTNAME`` em ``/etc/sysconfig/network``.
 
 
 Para um bom funcionamento do Puppet é fundamental que sua rede possua resolução de nomes via DNS configurada.
@@ -60,64 +60,189 @@ Prática Master/Agent
 
 Instalação do master
 ````````````````````
-1. O pacote ``puppet-server`` deverá estar instalado e certifique-se de que o hostname está correto.
+1. O pacote ``puppetserver`` deverá ser instalado na máquina que atuará como master. Certifique-se de que o hostname está correto.
 
 ::
 
   # hostname --fqdn
   master.puppet
    
-  # yum install puppet-server
+Instalando o pacote ``puppetserver`` no CentOS 7/Red Hat 7:
+
+::
+
+  # yum install -y http://yum.puppetlabs.com/el/7/PC1/x86_64/puppetlabs-release-pc1-0.9.2-1.el7.noarch.rpm
+  # yum install -y puppetserver tree
+  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bashrc
+  # echo "export PATH" >> /etc/bashrc
+  # export PATH=/opt/puppetlabs/bin:$PATH
+
+Instalando o pacote ``puppetserver`` no Debian 8:
+
+::
+
+  # cd /tmp
+  # wget http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb
+  # dpkg -i  puppetlabs-release-pc1-jessie.deb
+  # apt-get update
+  # apt-get install -y puppetserver tree
+  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bash.bashrc
+  # echo "export PATH" >> /etc/bash.bashrc
+  # export PATH=/opt/puppetlabs/bin:$PATH
+
+Instalando o pacote ``puppetserver`` no Ubuntu 14.04:
+
+::
+
+  # cd /tmp
+  # wget http://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb
+  # dpkg -i puppetlabs-release-pc1-trusty.deb
+  # apt-get update
+  # apt-get install -y puppetserver tree
+  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bash.bashrc
+  # echo "export PATH" >> /etc/bash.bashrc
+  # export PATH=/opt/puppetlabs/bin:$PATH
 
 Teremos a seguinte estrutura em ``/etc/puppet``:
 
 ::
 
-  # tree -F --dirsfirst /etc/puppet/
-  /etc/puppet/
-  |-- manifests/
-  |-- modules/
-  |-- auth.conf
-  |-- fileserver.conf
-  `-- puppet.conf
+  # tree -F --dirsfirst /etc/puppetlabs/
+  /etc/puppetlabs/
+  |-- code/
+  |   |-- environments/
+  |   |   |-- production/
+  |   |       |-- hieradata/
+  |   |       |-- manifests/
+  |   |       |-- modules/
+  |   |       |-- environment.conf
+  |   |-- modules/
+  |   |-- hiera.yaml
+  |-- mcollective/
+  |   |-- client.cfg
+  |   |-- data-help.erb
+  |   |-- discovery-help.erb
+  |   |-- facts.yaml
+  |   |-- metadata-help.erb
+  |   |-- rpc-help.erb
+  |   |-- server.cfg
+  |-- puppet/
+  |   |-- ssl/
+  |   |-- auth.conf
+  |   |-- puppet.conf
+  |-- puppetserver/
+      |-- conf.d/
+      |   |-- ca.conf
+      |   |-- global.conf
+      |   |-- puppetserver.conf
+      |   |-- web-routes.conf
+      |   |-- webserver.conf
+      |-- bootstrap.cfg
+      |-- logback.xml
+      |-- request-logging.xml
 
-* Sendo:
+* Os arquivos e diretórios de configuração mais importantes são:
 
  * ``auth.conf``: regras de acesso a API REST do Puppet.
 
  * ``fileserver.conf``: Utilizado para servir arquivos que não estejam em módulos.
 
- * ``manifests/``: Armazena a configuração que será compilada e servida para os agentes.
+ * ``code/environments/production/manifests/``: Armazena a configuração que será compilada e servida para os agentes que executam no ambiente de produção (padrão).
 
- * ``modules/``: Armazena módulos com classes, arquivos, plugins e mais configurações para serem usadas nos manifests.
+ * ``code/environments/production/modules/``: Armazena módulos com classes, arquivos, plugins e mais configurações para serem usadas nos manifests para o ambiente de produção (padrão).
 
  * ``puppet.conf``: Principal arquivo de configuração, tanto do master como do agente.
 
+
+.. dica::
+
+  |dica| **Sobre os arquivos de configuração**
+  
+  Nas páginas abaixo você encontra mais detalhes sobre os arquivos de configuração do puppet.
+  
+  https://docs.puppetlabs.com/puppet/latest/reference/config_important_settings.html
+  https://docs.puppetlabs.com/puppet/latest/reference/dirs_confdir.html
+  https://docs.puppetlabs.com/puppet/latest/reference/config_about_settings.html
+  https://docs.puppetlabs.com/puppet/latest/reference/config_file_main.html
+  https://docs.puppetlabs.com/references/latest/configuration.html
+  https://docs.puppetlabs.com/puppet/latest/reference/config_important_settings.html
+
+
+.. nota::
+
+  |nota| **Sobre os binários do Puppet**
+  
+  Os binários e libs do Puppet 4.x ficam, por padrão, dentro do diretório ``/opt/puppetlabs/bin/``.
+  Os arquivos de configuração ficam, por padrão, dentro do diretório ``/etc/puppetlabs/``.
+  
 .. raw:: pdf
  
  PageBreak
 
-2. Iniciando o serviço:
+2. Configurando o serviço:
+
+Altere as configurações de memória do Java a ser usado pelo Puppet. 
+
+* No CentOS 7 / Red Hat 7 edite o arquivo ``/etc/sysconfig/puppetserver``.
+
+::
+  
+  JAVA_ARGS="-Xms512m -Xmx512m -XX:MaxPermSize=256m"
+
+
+* No Debian 8 / Ubuntu 14.04 edite o arquivo ``/etc/default/puppetserver``.
+
+::
+  
+  JAVA_ARGS="-Xms512m -Xmx512m -XX:MaxPermSize=256m"
+ 
+Com esta configuração, será alocado  512 MB (no máximo) e 256 MB (no mínimo) para  uso exclusivo da JVM (Java Virtual Machine) usada pelo PuppetServer.
+
+3. Iniciando o serviço:
+
+ * No CentOS 7 / Red Hat 7:
 
 ::
 
-  # service puppetmaster start
+  # systemctl restart puppetserver
 
-Os logs, por padrão, são enviados para o syslog e estão disponíveis no arquivo ``/var/log/messages``:
+ * No Debian 8 / Ubuntu 14.04:
+ 
+::
+
+  # service puppetserver restart
+  
+.. nota::
+
+  |nota| **Configurando o Firewall e o NTP**  
+
+  Procure manter a hora do sistema de cada máquina corretamente configurada utilizando NTP, para evitar problemas na assinatura de certificados, entre outros.
+
+  A porta 8140/TCP do servidor Puppet-Master precisa estar acessível para as demais máquinas. 
+
+  Para a execução deste tutorial, o firewall foi parado no CentOS 7 / Red Hat 7 com os comandos abaixo.
 
 ::
 
-  tail /var/log/messages 
-  Nov 13 11:50:57 master puppet-master[2211]: Signed certificate request for ca
-  Nov 13 11:50:57 master puppet-master[2211]: Rebuilding inventory file
-  Nov 13 11:50:58 master puppet-master[2211]: master.puppet has a waiting certificate request
-  Nov 13 11:50:58 master puppet-master[2211]: Signed certificate request for master.puppet
-  Nov 13 11:50:58 master puppet-master[2211]: Removing file Puppet::SSL::CertificateRequest \
-        master.puppet at '/var/lib/puppet/ssl/ca/requests/master.puppet.pem'
-  Nov 13 11:50:58 master puppet-master[2211]: Removing file Puppet::SSL::CertificateRequest \
-        master.puppet at '/var/lib/puppet/ssl/certificate_requests/master.puppet.pem'
-  Nov 13 11:50:58 master puppet-master[2239]: Starting Puppet master version 3.0.1
-  Nov 13 11:50:58 master puppet-master[2239]: Reopening log files
+  # systemctl stop firewalld
+  # systemctl disable firewalld
+
+
+* No CentOS 7 / Red Hat 7:
+
+O log do puppetserver fica (por padrão) em:
+
+* ``/var/log/puppetlabs/puppetserver/puppetserver.log``
+* ``/var/log/puppetlabs/puppetserver/puppetserver-daemon.log`` 
+* ``/var/log/messages``
+
+* No Debian 8 / Ubuntu 14.04:
+
+O log do puppetserver fica (por padrão) em:
+
+* ``/var/log/puppetlabs/puppetserver/puppetserver.log``
+* ``/var/log/puppetlabs/puppetserver/puppetserver-daemon.log`` 
+* ``/var/log/syslog``
 
 Instalação do agente em node1
 `````````````````````````````
@@ -127,25 +252,73 @@ Instalação do agente em node1
 
   # hostname --fqdn
   node1.puppet
-  
-  # yum install puppet
 
-
-A estrutura do diretório ``/etc/puppet`` é a mesma do master, e os logs também são enviados via syslog e estão em ``/var/log/messages``.
-
-2. Em uma máquina em que o agente está instalado, precisamos configurá-la para que ele saiba quem é o master.
-
-No arquivo ``/etc/puppet/puppet.conf``, adicionar o parâmetro ``server`` na seção ``[main]``.
+Instalando o pacote ``puppet-agent`` no CentOS 7/Red Hat 7:
 
 ::
 
-  # vim /etc/puppet/puppet.conf
+  # yum install -y http://yum.puppetlabs.com/el/7/PC1/x86_64/puppetlabs-release-pc1-0.9.2-1.el7.noarch.rpm
+  # yum install -y puppet-agent
+  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bashrc
+  # echo "export PATH" >> /etc/bashrc
+  # export PATH=/opt/puppetlabs/bin:$PATH
+
+Instalando o pacote ``puppet-agent`` no Debian 8:
+
+::
+
+  # cd /tmp
+  # wget http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb
+  # dpkg -i  puppetlabs-release-pc1-jessie.deb
+  # apt-get update
+  # apt-get install -y puppet-agent
+  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bash.bashrc
+  # echo "export PATH" >> /etc/bash.bashrc
+  # export PATH=/opt/puppetlabs/bin:$PATH
+
+Instalando o pacote ``puppet-agent`` no Ubuntu 14.04:
+
+::
+
+  # cd /tmp
+  # wget http://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb
+  # dpkg -i puppetlabs-release-pc1-trusty.deb
+  # apt-get update
+  # apt-get install -y puppet-agent
+  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bash.bashrc
+  # echo "export PATH" >> /etc/bash.bashrc
+  # export PATH=/opt/puppetlabs/bin:$PATH
+
+  
+A estrutura do diretório ``/etc/puppetlabs`` é semelhante a do master.
+
+ * No CentOS 7 / Red Hat 7:
+
+O log do puppet-agent fica (por padrão) em:
+
+* ``/var/log/messages``
+* ``/var/log/puppetlabs/puppet``
+
+ * No Debian 8 / Ubuntu 14.04:
+
+O log do puppet-agent fica (por padrão) em:
+
+* ``/var/log/syslog``
+* ``/var/log/puppetlabs/puppet``
+
+2. Em uma máquina em que o agente está instalado, precisamos configurá-la para que ele saiba quem é o master.
+
+No arquivo ``/etc/puppetlabs/puppet/puppet.conf``, adicione as linhas abaixo.
+
+::
+
+  # /etc/puppetlabs/puppet/puppet.conf
   [main]
-      logdir = /var/log/puppet
-      rundir = /var/run/puppet
-      ssldir = $vardir/ssl
-      # parâmetro server
-      server = master.puppet
+  certname = node1.puppet
+  server = master.puppet
+  environment = production
+  # intervalo (em segundos) de atualizacao do catalogo
+  runinterval = 300 
 
 .. nota::
 
@@ -192,10 +365,15 @@ No arquivo ``/etc/puppet/puppet.conf``, adicionar o parâmetro ``server`` na se�
   Info: Creating state file /var/lib/puppet/state/state.yaml
   Finished catalog run in 0.05 seconds
 
+Agora execute os comandos abaixo para iniciar o puppet-agent como serviço e habilitá-lo para ser executado após o boot do sistema operacional.
+
+::
+  
+  # puppet resource service puppet ensure=running enable=true
+
 .. dica::
 
   |dica| **Possíveis problemas com certificados SSL**
   
   É importante que os horários do master e dos nodes não tenham grandes diferenças e estejam, de preferência, sincronizados.
   Conexões SSL confiam no relógio e, se estiverem incorretos, então sua conexão pode falhar com um erro indicando que os certificados não são confiáveis. Procure manter os relógios corretamente configurados utilizando NTP.
-

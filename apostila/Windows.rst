@@ -1,16 +1,33 @@
 Puppet no Windows
 =================
-O suporte a Windows no Puppet vem melhorando a cada nova versão. Mas não é possível hospedar o Puppet Master no Windows, sendo somente o agente suportado.
+O suporte a Windows no Puppet vem melhorando a cada nova versão. Mas não é possível hospedar o Puppet Master no Windows, sendo suportado somente o agente.
 
 Praticamente onde é possível criar compatibilidade, os resources do Puppet suportam Windows normalmente. Em alguns casos são necessários certos cuidados devido a  diferenças semânticas entre sistemas Unix-like e Windows.
 
 Prática: Instalação
 -------------------
-Essa prática é realizada em **win7.puppet** e **master.puppet**.
+Essa prática é realizada usando o **master.puppet** e uma nova máquina com o Windows 7 instalado, que será chamada de **win7.puppet**.
 
-1. Faça login na máquina **win7.puppet**, usuário *puppet* e senha *puppet*. No desktop está o instalador do Puppet para Windows. Instale.
+.. nota::
 
-2. Aparecerá a tela abaixo perguntando qual é o servidor master, preencha com **master.puppet**.
+  |nota| **Download do Puppet para Windows**
+
+  O instalador do Puppet para Windows está disponível na página abaixo:
+  https://downloads.puppetlabs.com/windows/
+  
+  Nas páginas abaixo você encontra a documentação completa para usar o Puppet no Windows.
+  
+  http://docs.puppetlabs.com/windows/
+  
+  http://docs.puppetlabs.com/guides/install_puppet/install_windows.html
+
+
+1. Faça login na máquina **win7.puppet**. Baixe o instalador do Puppet-Agent na seguinte URL. 
+
+Se 32 bits: https://downloads.puppetlabs.com/windows/puppet-agent-1.3.0-x86.msi
+Se 64 bits: https://downloads.puppetlabs.com/windows/puppet-agent-1.3.0-x64.msi
+
+2. Instale o pacote. Depois de aceitar a licença do Puppet, aparecerá a tela de Configuração, abaixo, perguntando qual é o servidor master, preencha com **master.puppet**.
 
 .. image:: images/windows-puppet-install.png
   :scale: 80%
@@ -19,7 +36,7 @@ Essa prática é realizada em **win7.puppet** e **master.puppet**.
 
 ::
 
-  msiexec /qn /i puppet.msi PUPPET_MASTER_SERVER=master.puppet
+  msiexec /qn /i nome_pacote_puppet.msi PUPPET_MASTER_SERVER=master.puppet
 
 
 4. Pare o serviço **Puppet**, pois realizaremos manualmente nossas atividades:
@@ -67,7 +84,7 @@ Essa prática é realizada em **win7.puppet** e **master.puppet**.
 
 Prática: resources para Windows
 -------------------------------
-Essa prática é realizada em **win7.puppet** e **master.puppet**.
+Essa prática é realizada usando o **master.puppet** e **win7.puppet**.
 
 1. Na máquina win7.puppet já temos baixado um pacote MSI que usaremos de exemplo para realizar a instalação. Declarar o seguinte no ``site.pp``:
 
@@ -155,21 +172,20 @@ Para mais detalhes sobre as diferenças na declaração dos resources no Windows
 
 Prática: manipulando o registro
 -------------------------------
-Essa prática é realizada em **win7.puppet** e **master.puppet**.
+Essa prática é realizada usando o **master.puppet** e **win7.puppet**.
 
-1. Instalando o módulo **puppetlabs-registry**:
+1. Instalando o módulo **puppetlabs-registry** no Puppet Master:
 
 ::
 
-  # pwd
-  /etc/puppet/modules
-  
+  # cd /etc/puppetlabs/code/environments/production/modules
   # puppet module install puppetlabs/registry
-  Preparing to install into /etc/puppet/modules ...
-  Downloading from https://forge.puppetlabs.com ...
-  Installing -- do not interrupt ...
-  /etc/puppet/modules
-  |-- puppetlabs-registry (v0.1.1)
+  Notice: Preparing to install into /etc/puppetlabs/code/environments/production/modules ...
+  Notice: Downloading from https://forgeapi.puppetlabs.com ...
+  Notice: Installing -- do not interrupt ...
+  /etc/puppetlabs/code/environments/desenv/modules
+  |--| puppetlabs-registry (v1.1.2)
+  |--- puppetlabs-stdlib (v4.9.0)
 
 
 2. Execute o agente no Windows para instalação do módulo **puppetlabs-registry** (lembre-se de abrir o terminal do Puppet como *Administrator*):
@@ -202,4 +218,3 @@ Essa prática é realizada em **win7.puppet** e **master.puppet**.
 
 .. image:: images/windows-regedit.png
   :scale: 80%
-

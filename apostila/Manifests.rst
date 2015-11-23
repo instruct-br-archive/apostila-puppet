@@ -15,11 +15,12 @@ Para manipular diversos aspectos de nosso sistema, devemos estar logados como ``
 
 ::
 
+  # mkdir /root/manifests
   # vim /root/manifests/arquivo-1.pp
-  file {'teste':
+  file { 'teste':
     path    => '/tmp/teste.txt',
     ensure  => present,
-    mode    => 0640,
+    mode    => '0640',
     content => "Conteudo de teste!\n",
   }
 
@@ -27,15 +28,16 @@ Para manipular diversos aspectos de nosso sistema, devemos estar logados como ``
 
 ::
 
-  # puppet apply arquivo-1.pp 
-  notice: /Stage[main]//File[teste]/ensure: created
-  notice: Finished catalog run in 0.08 seconds
-  
+  # puppet apply /root/manifests/arquivo-1.pp 
+  Notice: /Stage[main]/Main/File[teste]/ensure: \
+    defined content as '{md5}14c8346a185a9b0dd3f44c22248340f7'
+  Notice: Applied catalog in 0.05 seconds
+
   # cat /tmp/teste.txt 
   Conteudo de teste!
   
   # ls -l /tmp/teste.txt
-  -rw-r----- 1 root root 19 Sep 19 09:20 /tmp/teste.txt
+  -rw-r----- 1 root root 19 Nov 11 13:21 /tmp/teste.txt
 
 * Temos um *resource type*, nesse caso, ``file``, seguido por um par de colchetes que englobam todo o restante das informações sobre o resource.
 * Dentro dos colchetes, temos:
@@ -62,28 +64,28 @@ Além disso, algumas regras são fundamentais sobre a sintaxe:
 
   O Puppet fornece algumas funcionalidades que nos permitem testar o código antes de executá-lo.
 
-  Primeiramente podemos validar se existe algum erro de sintaxe, usando o comando ``puppet parser validade arquivo.pp``.
+  Primeiramente podemos validar se existe algum erro de sintaxe, usando o comando ``puppet parser validate arquivo.pp``.
 
-  O comando ``puppet parser`` apenas verifica se o manifest está correto.
+  O comando ``puppet parser validate`` apenas verifica se o manifest está correto.
   
-  Para simularmos as alterações que serão ou não feitas, usamos ``puppet apply --noop``.
+  Para simularmos as alterações que serão ou não feitas, usamos ``puppet apply --noop arquivo.pp``.
 
 Mais exemplos:
 
 .. code-block:: ruby
 
   # vim /root/manifests/arquivo-2.pp
-  file {'/tmp/teste1.txt':
+  file { '/tmp/teste1.txt':
     ensure  => present,
     content => "Ola!\n",
   }
   
-  file {'/tmp/teste2':
+  file { '/tmp/teste2':
    ensure => directory,
-   mode   => 0644,
+   mode   => '0644',
   }
   
-  file {'/tmp/teste3.txt':
+  file { '/tmp/teste3.txt':
     ensure => link,
     target => '/tmp/teste1.txt',
   }
@@ -97,26 +99,28 @@ E, finalmente, vamos aplicar:
 
 ::
 
-  # puppet apply arquivo-2.pp
-  notice: /Stage[main]//File[/tmp/teste1.txt]/ensure: created
-  notice: Outra notificação
-  notice: /Stage[main]//Notify[Outra notificação]/message: defined 'message' as \
-            'Outra notificação'
-  notice: /Stage[main]//File[/tmp/teste3.txt]/ensure: created
-  notice: /Stage[main]//File[/tmp/teste2]/ensure: created
-  notice: Gerando uma notificação!
-  notice: /Stage[main]//Notify[Gerando uma notificação!]/message: defined 'message' \
-            as 'Gerando uma notificação!'
-  notice: Finished catalog run in 0.03 seconds
-  
+  # puppet apply /root/manifests/arquivo-2.pp
+  Notice: /Stage[main]/Main/File[/tmp/teste1.txt]/ensure: \
+    defined content as '{md5}50c32e08ab3f0df064af1a8c98d1b6ce'
+  Notice: /Stage[main]/Main/File[/tmp/teste2]/ensure: created
+  Notice: /Stage[main]/Main/File[/tmp/teste3.txt]/ensure: created
+  Notice: Gerando uma notificação!
+  Notice: /Stage[main]/Main/Notify[Gerando uma notificação!]/message: \
+    defined 'message' as 'Gerando uma notificação!'
+  Notice: Outra notificação
+  Notice: /Stage[main]/Main/Notify[Outra notificação]/message: \
+    defined 'message' as 'Outra notificação'
+  Notice: Applied catalog in 0.05 seconds
+
   # ls -la /tmp/teste*
-  -rw-r--r-- 1 root root    5 Sep 21 12:08 /tmp/teste1.txt
-  lrwxrwxrwx 1 root root   15 Sep 21 12:08 /tmp/teste3.txt -> /tmp/teste1.txt
-  
+  -rw-r--r-- 1 root root    5 Nov 11 13:28 /tmp/teste1.txt
+  lrwxrwxrwx 1 root root   15 Nov 11 13:28 /tmp/teste3.txt -> /tmp/teste1.txt
+  -rw-r----- 1 root root   19 Nov 11 13:21 /tmp/teste.txt
+
   /tmp/teste2:
   total 8
-  drwxr-xr-x  2 root root 4096 Sep 21 12:08 .
-  drwxrwxrwt 24 root root 4096 Sep 21 12:08 ..
+  drwxr-xr-x 2 root root 4096 Nov 11 13:28 .
+  drwxrwxrwt 8 root root 4096 Nov 11 13:28 ..
   
   # cat /tmp/teste3.txt 
   Ola!
@@ -140,7 +144,7 @@ Não é possível declarar o mesmo *resource* mais de uma vez. O Puppet não per
 
 ::
 
-  # cat conflito.pp 
+  # vim /root/manifests/conflito.pp 
   file {'arquivo':
   	path => '/tmp/arquivo.txt',
   	ensure => present,
@@ -151,10 +155,11 @@ Não é possível declarar o mesmo *resource* mais de uma vez. O Puppet não per
   	ensure => present,
   }
   
-  # puppet apply conflito.pp 
-  Cannot alias File[outroarquivo] to ["/tmp/arquivo.txt"] at \
-        /root/manifests/conflito.pp:9; resource ["File", "/tmp/arquivo.txt"] \
-        already declared at /root/manifests/conflito.pp:4
+  # puppet apply /root/manifests/conflito.pp
+  Error: Evaluation Error: Error while evaluating a Resource Statement, \
+     Cannot alias File[outroarquivo] to ["/tmp/arquivo.txt"] at \
+     /root/manifests/conflito.pp:6; resource ["File", "/tmp/arquivo.txt"] \
+     already declared at /root/manifests/conflito.pp:1 at /root/manifests/conflito.pp:6:3
 
 Observações sobre o resource file
 `````````````````````````````````
@@ -199,4 +204,3 @@ Prática: conhecendo os resources
   group {'super':
     gid => 777,
   }
-

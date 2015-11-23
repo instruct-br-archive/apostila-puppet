@@ -56,17 +56,14 @@ A camada de transação é o motor do Puppet. Nela é realizada a configuração
 4. Reportar os resultados para o master.
 
 O Puppet analisa a sua configuração e calcula como aplicá-la no agente.
-Para isso, é criado um grafo que contém todos os resources e suas relações
-uns com os outros. Isso permite ao Puppet decidir a melhor ordem para
-aplicação da configuração com base em relacionamentos criados pelo SysAdmin.
+Para isso, é criado um grafo que contém todos os resources e suas relações uns com os outros. Isso permite ao Puppet decidir a melhor ordem para aplicação da configuração com base em relacionamentos criados pelo SysAdmin.
 
 Os resourses são compilados no que chamamos de catálogo, que é enviado aos nodes e aplicado pelos agentes, que devolvem ao master um relatório sobre o que foi feito. Isso não faz o Puppet ser totalmente transacional, como um tradicional banco de dados onde alterações podem ser revertidas. Porém, é possível modelar sua configuração com um modo "noop" (*no operation*, sem operação), onde é possível testar a execução de sua configuração sem realmente aplicá-la.
 
-Uma das consequências do modo de operação do Puppet é a idempotência, ou seja, as configurações podem ser aplicadas repetidas vezes de maneira segura. O Puppet vai alterar somente o que está em divergência com o declarado.
+Uma das consequências do modo de operação do Puppet é a independência, ou seja, as configurações podem ser aplicadas repetidas vezes de maneira segura. O Puppet vai alterar somente o que está em divergência com o declarado.
 
 Camada de abstração de recursos
 ```````````````````````````````
 A *Resource Abstraction Layer (RAL)* do Puppet é o que garante a simplificação das dores de cabeça de um SysAdmin por ter que lidar com diversos sistemas operacionais diferentes. Nomes, argumentos e localização de comandos, formatos de arquivos, controle de serviços e outras tantas diferenças que existem, e muitas vezes não fazem sentido, são abstraídas na linguagem de configuração do Puppet.
 
 Para cada resource, existe um *provider* (provedor). O provider é responsável pelo "como" fazer para gerenciar um resource, por exemplo, a instalação de pacotes. Uma vez que você declara que quer o pacote ``sudo`` instalado, não será mais necessário se preocupar se a plataforma utiliza ``apt`` ou ``yum``.
-

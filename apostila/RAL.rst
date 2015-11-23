@@ -40,9 +40,6 @@ O primeiro argumento que deve ser passado é o *resource type* que será consult
     comment          => 'Avahi mDNS daemon,,,',
     gid              => '108',
     home             => '/var/run/avahi-daemon',
-    password         => '*',
-    password_max_age => '99999',
-    password_min_age => '0',
     shell            => '/bin/false',
     uid              => '105',
   }
@@ -51,14 +48,10 @@ O primeiro argumento que deve ser passado é o *resource type* que será consult
     comment          => 'backup',
     gid              => '34',
     home             => '/var/backups',
-    password         => '*',
-    password_max_age => '99999',
-    password_min_age => '0',
     shell            => '/bin/sh',
     uid              => '34',
   }
   ...
-
 
 A saída mostra todos os usuários, com atributos como UID, GID e shell já formatados na linguagem do Puppet que estejam presentes no sistema operacional.
 
@@ -72,13 +65,9 @@ Nós podemos ser mais específicos e consultar apenas um *resource*:
     comment          => 'root',
     gid              => '0',
     home             => '/root',
-    password         => '$6$.MuEgeA1$mL6sF0FnGUaTQWYBdqzwX3tGT2fgoCYYU...',
-    password_max_age => '99999',
-    password_min_age => '0',
     shell            => '/bin/bash',
     uid              => '0',
   }
-
 
 Esse código gerado pode ser utilizado depois, e é funcional.
 
@@ -89,15 +78,14 @@ Tradicionalmente, para criarmos um usuário usamos comandos como ``useradd`` ou 
 ::
 
   # puppet resource user joe ensure=present home="/home/joe" managehome=true
-  notice: /User[joe]/ensure: created
+  Notice: /User[joe]/ensure: created
   user { 'joe':
     ensure => 'present',
     home   => '/home/joe',
   }
-  
+ 
   # id joe
   uid=500(joe) gid=500(joe) groups=500(joe)
-
 
 Repare que a linha de comando não necessariamente lê código Puppet. Podemos usar somente argumentos.
 
@@ -133,7 +121,7 @@ Parando um serviço que está em execução:
 ::
 
   # puppet resource service iptables ensure=stopped
-  notice: /Service[iptables]/ensure: ensure changed 'running' to 'stopped'
+  Notice: /Service[iptables]/ensure: ensure changed 'running' to 'stopped'
   service { 'iptables':
     ensure => 'stopped',
   }
@@ -149,7 +137,7 @@ Inciando um serviço que estava parado:
   saslauthd is stopped
   
   # puppet resource service saslauthd ensure=running
-  notice: /Service[saslauthd]/ensure: ensure changed 'stopped' to 'running'
+  Notice: /Service[saslauthd]/ensure: ensure changed 'stopped' to 'running'
   service { 'saslauthd':
     ensure => 'running',
   }
@@ -176,7 +164,7 @@ Com um mesmo comando, podemos fazer a instalação, por exemplo, do ``aide``, ta
   package aide is not installed
   
   # puppet resource package aide ensure=installed
-  notice: /Package[aide]/ensure: created
+  Notice: /Package[aide]/ensure: created
   package { 'aide':
     ensure => '0.14-3.el6_2.2',
   }
@@ -193,11 +181,11 @@ Com um mesmo comando, podemos fazer a instalação, por exemplo, do ``aide``, ta
   and dpkg --contents (= dpkg-deb --contents) to list their contents.
   
   # puppet resource package aide ensure=installed
-  notice: /Package[aide]/ensure: ensure changed 'purged' to 'present'
+  Notice: /Package[aide]/ensure: created
   package { 'aide':
-    ensure => '0.15.1-2+squeeze1',
+    ensure => '0.16~a2.git20130520-3',
   }
-  
+    
   # dpkg -s aide
 
 Principais Resource Types
@@ -246,15 +234,16 @@ Para sabermos os atributos de um tipo, o próprio comando ``puppet`` nos fornece
   Parameters
   ----------
       allowdupe, attribute_membership, attributes, auth_membership, auths,
-      comment, ensure, expiry, gid, groups, home, ia_load_module,
-      key_membership, keys, managehome, membership, name, password,
-      password_max_age, password_min_age, profile_membership, profiles,
-      project, role_membership, roles, shell, system, uid
+      comment, ensure, expiry, forcelocal, gid, groups, home, ia_load_module,
+      iterations, key_membership, keys, loginclass, managehome, membership,
+      name, password, password_max_age, password_min_age, profile_membership,
+      profiles, project, purge_ssh_keys, role_membership, roles, salt, shell,
+      system, uid
   
   Providers
   ---------
-      aix, directoryservice, hpuxuseradd, ldap, pw, user_role_add, useradd,
-      windows_adsi
+      aix, directoryservice, hpuxuseradd, ldap, openbsd, pw, user_role_add,
+      useradd, windows_adsi
 
 Pronto, agora temos uma lista de parâmetros sobre o tipo ``user``.
 
@@ -313,7 +302,7 @@ Vamos colocar o usuário **joe** aos grupos **adm** e **bin**. Normalmente farí
 
 ::
 
-  info: Applying configuration version '1348039985'
-  notice: /Stage[main]//User[joe]/groups: groups changed  to 'adm,bin'
-  notice: Finished catalog run in 0.30 seconds
-
+  Info: Applying configuration version '1447253347'
+  Notice: /Stage[main]/Main/User[joe]/groups: groups changed '' to ['adm', 'bin']
+  Notice: Applied catalog in 0.07 seconds
+  
