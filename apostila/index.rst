@@ -78,11 +78,11 @@
 .. include:: Modulos.rst
 .. .. include:: Forge.rst
 .. include:: Templates.rst
+.. include:: Environments.rst
 .. .. include:: Lab2.rst
 .. .. include:: ENCs.rst
 .. .. include:: Augeas.rst
 .. .. include:: Windows.rst
-.. .. include:: Environments.rst
 .. include:: Historico.rst
 
 
