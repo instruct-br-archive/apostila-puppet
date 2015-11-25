@@ -81,7 +81,7 @@
 .. include:: Environments.rst
 .. .. include:: Lab2.rst
 .. .. include:: ENCs.rst
-.. .. include:: Augeas.rst
+.. include:: Augeas.rst
 .. .. include:: Windows.rst
 .. include:: Historico.rst
 

@@ -13,12 +13,13 @@ Usando o Augeas
 
 O comando ``augtool`` é um pequeno interpretador de comandos e, através dele, podemos manipular de diversas formas arquivos de configuração.
 
+O pacote ``puppet-agent`` já traz o ``augtool`` em ``/opt/puppetlabs/puppet/bin``.
+
 Vejamos como o arquivo ``/etc/resolv.conf`` está configurado:
 
 ::
 
   # cat /etc/resolv.conf
-  cat /etc/resolv.conf 
   domain puppet
   search puppet
   nameserver 8.8.8.8
@@ -104,23 +105,23 @@ Os comandos abaixo podem ser executados na máquina **node1.puppet**.
   nameserver[1] = 8.8.8.8
   nameserver[2] = 8.8.4.4
 
-3. Use o comando ``print`` no arquivo ``/etc/hosts``. Identifique qual é o número do registro do host **sandbox.puppet**.
+3. Use o comando ``print`` no arquivo ``/etc/hosts``. Identifique qual é o número do registro do host **node1.puppet**.
 
 ::
 
   augtool> print /files/etc/hosts
 
 
-4. De posse do número do registro do host **sandbox.puppet**, crie um novo alias para o host:
+4. De posse do número do registro do host **node1.puppet**, crie um novo alias para o host:
 
 ::
 
-  augtool> set /files/etc/hosts/NUMERO_DO_HOST/alias[2] sand-box
+  augtool> set /files/etc/hosts/NUMERO_DO_HOST/alias[2] node1
   augtool> save
   Saved 1 file(s)
   augtool> quit
 
-5. Verifique se **sand-box** está presente no ``/etc/hosts``
+5. Verifique se **node1** está presente no ``/etc/hosts``
 
 Augeas e Puppet
 ---------------
