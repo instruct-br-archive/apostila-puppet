@@ -21,6 +21,12 @@ Para uma comparação mais detalhada sobre as diferenças entre a versão Open S
   código fonte não é recomendado. A própria Puppet Labs não recomenda a instalação a partir do código
   fonte. É muito mais confiável e conveniente utilizar pacotes já homologados e testados.
 
+.. dica::
+
+  |dica| **Turbinando o Vim**
+
+  Utilize os plugins disponíveis em https://github.com/rodjek/vim-puppet para facilitar a edição de código no Vim.
+
 Debian e Ubuntu
 ---------------
 
@@ -56,17 +62,6 @@ Acesse http://apt.puppetlabs.com e localize o pacote adequado para outras versõ
 
   # echo 'PATH=$PATH:/opt/puppetlabs/puppet/bin' > /etc/profile.d/append-puppetlabs-path.sh
 
-.. dica::
-
-  |dica| **Turbinando o vim**
-  
-  Para facilitar a edição de código, caso você utilize o editor vim, ative o plugin que adiciona o suporte a linguagem do Puppet executando os comandos abaixo e não deixe de adicionar a linha **syntax on** no seu ``/home/name_user/.vimrc`` ou ``/root/.vimrc``.
-  
-::
-
-  # apt-get -y install vim vim-addon-manager vim-puppet
-  # vim-addons install puppet
-  
 CentOS
 ------
 
@@ -92,12 +87,3 @@ Acesse http://yum.puppetlabs.com e localize o pacote adequado de outras versões
 
   # echo 'PATH=$PATH:/opt/puppetlabs/puppet/bin' > /etc/profile.d/append-puppetlabs-path.sh
 
-.. dica::
-
-  |dica| **Turbinando o vim**
-  
-  Para facilitar a edição de código, caso você utilize o editor vim, ative o plugin que adiciona o suporte a linguagem do Puppet executando o comando abaixo e não deixe de adicionar a linha **syntax on** no seu ``/home/name_user/.vimrc`` ou ``/root/.vimrc``.
-  
-::
-
-  # yum -y install vim vim-puppet
