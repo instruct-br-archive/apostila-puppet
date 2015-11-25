@@ -76,7 +76,7 @@
 .. include:: MasterAgent.rst
 .. include:: Nodes.rst
 .. include:: Modulos.rst
-.. .. include:: Forge.rst
+.. include:: Forge.rst
 .. include:: Templates.rst
 .. include:: Environments.rst
 .. .. include:: Lab2.rst

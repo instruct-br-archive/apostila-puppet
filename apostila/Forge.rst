@@ -14,34 +14,7 @@ Um dos itens comumente configurados em sistemas operacionais são os parâmetros
 
 Poderíamos criar um módulo para que essas configurações fossem gerenciadas via Puppet, mas felizmente alguém já deve ter resolvido esse problema.
 
-1. Faça uma busca por **sysctl** no repositório do PuppetForge.
-
-::
-
-  # cd /etc/puppetlabs/code/environments/production/modules
-
-  # puppet module search sysctl
-  Notice: Searching https://forgeapi.puppetlabs.com ...
-  NAME                                 DESCRIPTION                                               AUTHOR             KEYWORDS                    
-  duritong-sysctl                      This modules allows you to configure sysctl.              @duritong          sysctl                      
-  ULHPC-sysctl                         Configure and manage sysctl                               @ULHPC             os sysctl kernel parameters 
-  halyard-sysctl                       Sysctl module                                             @halyard           os sysctl                   
-  fiddyspence-sysctl                   sysctl type and provider                                  @fiddyspence       sysctl kernel parameters    
-  thias-sysctl                         Sysctl module                                             @thias             os sysctl                   
-  example42-sysctl                     Puppet module for sysctl                                  @example42         sysctl example42            
-  trlinkin-sysctl                      Control Sysctl entries on UNIX systems.                   @trlinkin          os sysctl type mac linux bsd
-  kickstandproject-sysctl              UNKNOWN                                                   @kickstandproject  ubuntu sysctl               
-  a2labs-sysctl                        Configure sysctl settings on Ubuntu                       @a2labs                                        
-  a2tar-sysctl                         Puppet sysctl editor for ubuntu                           @a2tar             ubuntu sysctl               
-  Flameeyes-sysctl                     Cross-distributions sysctl handling                       @Flameeyes         ubuntu sysctl centos gentoo 
-  eliasp-sysctl                        Cross-distributions sysctl handling                       @eliasp            ubuntu centos gentoo        
-  lgbarn-sysctl                        Module to control sysctl entries                          @lgbarn                                        
-  herculesteam-augeasproviders_sysctl  Augeas-based sysctl type and provider for Puppet          @herculesteam      sysctl augeas types         
-  greatboy-bs_sysctl                   A puppet module which manage /etc/sysctl.conf file.       @greatboy                                      
-  thias-tuned                          Tuned adaptive system tuning daemon module                @thias             sysctl tuned                
-  domcleal-augeasproviders             Alternative Augeas-based providers for Puppet             @domcleal          mail ssh sysctl nrpe sshd   
-  ffollonier-wrappers                  Puppet Module for wrapping defined types from several...  @ffollonier        nginx sysctl php jboss      
-  erwbgy-system                        Manage Linux system resources and services from hiera...  @erwbgy            ntp sysctl rhel cron sshd                      
+1. Faça uma busca por **sysctl** em https://forge.puppetlabs.com
 
 2. Já existem vários módulos para tratar esse problema. Vamos instalar um deles (já testado anteriormente, por isso a escolha):
 
@@ -51,7 +24,7 @@ Poderíamos criar um módulo para que essas configurações fossem gerenciadas v
   Notice: Preparing to install into /etc/puppetlabs/code/environments/production/modules ...
   Notice: Downloading from https://forgeapi.puppetlabs.com ...
   Notice: Installing -- do not interrupt ...
-  /etc/puppetlabs/code/environments/desenv/modules
+  /etc/puppetlabs/code/environments/production/modules
   |--- trlinkin-sysctl (v0.0.2)
 
 3. Usando o módulo, via linha de comando:
@@ -104,7 +77,7 @@ Prática: módulo para autofsck do Puppet Forge
   Notice: Preparing to install into /etc/puppetlabs/code/environments/production/modules ...
   Notice: Downloading from https://forgeapi.puppetlabs.com ...
   Notice: Installing -- do not interrupt ...
-  /etc/puppetlabs/code/environments/desenv/modules
+  /etc/puppetlabs/code/environments/production/modules
   |--| jhoblitt-autofsck (v1.1.0)
   |--- puppetlabs-stdlib (v4.9.0)
 
