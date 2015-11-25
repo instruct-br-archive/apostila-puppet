@@ -1,13 +1,27 @@
 Sobre a Instruct
 ================
 
-A `Instruct <http://instruct.com.br>`_ tem como especialidade soluções na área de automação e monitoramento de infraestrutura de rede, administração de sistemas e redes e capacitação para certificações. Temos grande experiência na implementação de automação de infraestrutura usando Puppet e possuímos os profissionais mais experientes do mercado, como Miguel Di Ciurcio Filho e José Augusto (Guto) Carvalho, primeiros certificados Puppet Professional (PCP) pela PuppetLabs da América Latina, além de ambos possuírem as certificações RHCE, LPIC-3, dentre outras.
+A `Instruct <http://instruct.com.br>`_ é a autoridade em automação e Puppet no Brasil e somos
+parceiros e representantes oficiais da Puppet Labs no Brasil para suporte, licenciamento, treinamento e
+consultoria. A empresa tem como especialidade soluções na área de automação de infraestrutura e
+gerenciamento de configuração e possui equipe capacitada e certificada.
 
-Somos parceiros oficiais da `PuppetLabs <http://puppetlabs.com>`_ no Brasil, ministramos os `treinamentos oficiais da PuppetLabs <http://instruct.com.br/treinamentos.html>`_ e fornecemos suporte e consultoria. Já possuímos clientes que usufruem da automação fornecida pelo Puppet em conjunto com os nossos serviços.
-
-Combinada com a experiência dos profissionais da empresa, além dos serviços e soluções, a Instruct também fornece treinamentos voltados para certificações reconhecidas no mercado, como `LPI <http://www.lpi.org>`_ e `CompTIA <http://www.comptia.org>`_.
-
-Os exercícios e materiais de estudo são desenvolvidos pela própria empresa, o que demonstra o compromisso com a qualidade e a entrega de uma experiência diferenciada.
+Possuímos os profissionais mais experientes do mercado, como Miguel Di Ciurcio Filho e José Augusto (Guto) Carvalho, primeiros
+certificados *Puppet Certified Professional* (PCP) pela Puppet Labs na América Latina e também os únicos *Puppet Certified Instructor*.
 
 Versões mais novas e outras informações sobre essa apostila podem ser encontradas em http://instruct.com.br/apostila-puppet.
+
+Saiba mais sobre Puppet e a Instruct com o conteúdo do nosso canal no YouTube e nas redes socias:
+
+* https://youtube.com/instructbr
+* https://twitter.com/InstructBR
+* https://facebook.com/InstructBR
+
+O código fonte e instruções de como compilar contribuir para com esta apostila estão publicados no GitHub: https://github.com/instruct-br/apostila-puppet.
+
+Caso esteja procurando serviços profissionais relacionados a automação e Puppet, entre em contato conosco:
+
+* Email: contato@instruct.com.br
+* Escritório em **Campinas/SP**: Rua Joaquim Pinto de Moraes, 247, Sala 11. Telefone: **19 2511-6506**
+* Estritório em **Brasília/DF**: SRCS 502, Bl. C, Lj. 27, Asa Sul. Telefone: **61 3246-9299**
 
