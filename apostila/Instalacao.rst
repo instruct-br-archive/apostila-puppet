@@ -8,49 +8,53 @@ Existem duas versões do Puppet distribuídas pela PuppetLabs: *Puppet Open Sour
 é distribuído gratuitamente para o gerenciamento de até 10 nodes, possui suporte oficial e vem acompanhado de uma versátil
 interface web para administração.
 
-Para uma comparação mais detalhada sobre as diferenças entre a versão Open Source e a Enterprise, visite as páginas: https://puppetlabs.com/puppet/enterprise-and-open-source e https://puppetlabs.com/puppet/faq .
+Para uma comparação mais detalhada sobre as diferenças entre a versão Open Source e a Enterprise, visite as páginas abaixo:
+
+* https://puppetlabs.com/puppet/enterprise-and-open-source
+* https://puppetlabs.com/puppet/faq
 
 .. aviso::
 
   |aviso| **Instalação a partir do código fonte**
   
   O Puppet é um projeto grande e complexo que possui muitas dependências, e instalá-lo a partir do
-  código fonte não é recomendado. A própria PuppetLabs não recomenda a instalação a partir do código
+  código fonte não é recomendado. A própria Puppet Labs não recomenda a instalação a partir do código
   fonte. É muito mais confiável e conveniente utilizar pacotes já homologados e testados.
 
 Debian e Ubuntu
 ---------------
 
-1. Adicionando o repositório da PuppetLabs:
+1. Adicione o repositório da Puppet Labs:
 
-* Debian 8.x (Jessie)
+* Debian 8 (Jessie)
 
 ::
 
-  # cd /tmp
   # wget http://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb
   # dpkg -i  puppetlabs-release-pc1-jessie.deb
   # apt-get update
 
-* Ubuntu 14.04.x LTS (Trusty)
+* Ubuntu 14.04 LTS (Trusty)
 
 ::
 
-  # cd /tmp
   # wget http://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb
   # dpkg -i puppetlabs-release-pc1-trusty.deb
   # apt-get update
 
-Para instalar o repositório em outras versões do Debian ou Ubuntu, acesse a página http://apt.puppetlabs.com/ e baixe o pacote puppetlabs-release-pc1-SOBRENOME_DISTRO.deb. Por exemplo, o sobrenome do Debian 7 é Wheezy. Logo, o pacote seria puppetlabs-release-pc1-wheezy.deb.
+Acesse http://apt.puppetlabs.com e localize o pacote adequado para outras versões do Debian ou Ubuntu.
 
-2. Instale o pacote **puppet-agent**.
+2. Instale o pacote ``puppet-agent``:
 
 ::
 
   # apt-get -y install puppet-agent
-  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bash.bashrc
-  # echo "export PATH" >> /etc/bash.bashrc
-  # export PATH=/opt/puppetlabs/bin:$PATH
+
+3. Torne os comandos do pacote ``puppet-agent`` disponíveis no *path* do sistema:
+
+::
+
+  # echo 'PATH=$PATH:/opt/puppetlabs/puppet/bin' > /etc/profile.d/append-puppetlabs-path.sh
 
 .. dica::
 
@@ -63,27 +67,30 @@ Para instalar o repositório em outras versões do Debian ou Ubuntu, acesse a p�
   # apt-get -y install vim vim-addon-manager vim-puppet
   # vim-addons install puppet
   
-Red Hat e CentOS
-----------------
+CentOS
+------
 
-1. Adicionando o repositório da PuppetLabs:
+1. Adicione o repositório da Puppet Labs:
 
-* Red Hat 7.x / CentOS 7.x
+* CentOS 7
 
 ::
 
-  # yum install -y http://yum.puppetlabs.com/el/7/PC1/x86_64/puppetlabs-release-pc1-0.9.2-1.el7.noarch.rpm
+  # yum install -y http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
 
-Para instalar o repositório em outras versões do Red Hat ou CentOS, acesse a página http://yum.puppetlabs.com/el/ e localize o pacote adequado para a sua distro, para instalar conforme o exemplo mostrado acima.
+Acesse http://yum.puppetlabs.com e localize o pacote adequado de outras versões e distribuições da família Red Hat.
 
-2. Instale o pacote **puppet-agent**.
+2. Instale o pacote ``puppet-agent``:
 
 ::
 
   # yum -y install puppet-agent
-  # echo "PATH=/opt/puppetlabs/bin:$PATH" >> /etc/bashrc
-  # echo "export PATH" >> /etc/bashrc
-  # export PATH=/opt/puppetlabs/bin:$PATH
+
+3. Torne os comandos do pacote ``puppet-agent`` disponíveis no *path* do sistema:
+
+::
+
+  # echo 'PATH=$PATH:/opt/puppetlabs/puppet/bin' > /etc/profile.d/append-puppetlabs-path.sh
 
 .. dica::
 
