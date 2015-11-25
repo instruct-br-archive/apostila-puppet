@@ -65,8 +65,8 @@
 
 .. include:: Licenca.rst
 .. include:: Sobre.rst
-.. .. include:: GerenciamentoDeConfiguracao.rst
-.. .. include:: IntroducaoPuppet.rst
+.. include:: GerenciamentoDeConfiguracao.rst
+.. include:: IntroducaoPuppet.rst
 .. include:: Instalacao.rst
 .. include:: RAL.rst
 .. include:: Manifests.rst
