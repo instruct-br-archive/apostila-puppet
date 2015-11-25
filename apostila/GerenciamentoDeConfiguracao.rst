@@ -11,7 +11,7 @@ Diante desse cenário, é fundamental utilizar uma ferramenta robusta, que não 
 
 O que é gerenciamento de configuração?
 ``````````````````````````````````````
-Mais de 40% dos problemas de disponibilidade em serviços de missão crítica na área de TI são causados por falhas humanas e gestão de processos. Parte
+Grande parte de problemas de disponibilidade em serviços de missão crítica na área de TI são causados por falhas humanas e gestão de processos. Parte
 significativa desses problemas poderia ser evitada se fosse feita uma melhor coordenação na gerência de mudanças e de configuração.
 
 Muitas organizações de TI utilizam processos manuais, scripts customizados, imagens de sistema e outras técnicas rudimentares para execução de tarefas
