@@ -101,7 +101,7 @@ Exemplo de saída da execução do comando ``facter``:
 
 Todas essas variáveis estão disponíveis para uso dentro de qualquer manifest e dizemos que estão no escopo de topo (*top scope*).
 
-O exemplo abaixo (inserido no arquivo ``/root/manifests/a.pp``) usa algumas das variáveis geradas pelo ``facter``:
+O exemplo abaixo usa algumas das variáveis geradas pelo ``facter``:
 
 .. code-block:: ruby
 
@@ -216,17 +216,15 @@ Os blocos podem conter qualquer qualquer tipo de definição de configuração, 
 
   |aviso| **True e False para o Puppet.**
   
-  No Puppet 3, quando usamos variáveis que vêm do ``facter``, sempre são strings.
+  No Puppet 3, as variáveis que vêm do Facter sempre são strings.
   
-  Mesmo que seja retornado *false*, por exemplo, no fato $::is_virtual, é diferente do tipo booleano ``false``.
+  Mesmo que seja retornado *false*, por exemplo no fato $::is_virtual, é diferente do tipo booleano ``false``.
   
-  Portanto, um código como o abaixo sempre cairá no primeiro bloco, pois a variável é uma string.
-  
-  ``if $::is_virtual { ... } else { ... }``
-  
-  No Puppet 4.3.x, um código como o abaixo funciona, pois o resultado fato $::is_virtual é do tipo booleano.
+  Portanto, um código como o abaixo sempre cairá no primeiro bloco mesmo `$::is_virtual` sendo "false".
   
   ``if $::is_virtual { ... } else { ... }``
+  
+  No Puppet 4 os tipos dos fatos retornados pelo Facter são respeitados.
   
 Expressões
 ``````````
