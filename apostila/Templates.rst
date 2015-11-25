@@ -173,7 +173,7 @@ Prática: usando templates
     $admins = ['Joao j@foo.com', 'Edu e@foo.com', 'Bia b@foo.com']
     file {'/etc/motd':
       ensure  => 'file',
-      mode    => "644",
+      mode    => '0644',
       content => template("motd/motd.erb"),
     }
   }
@@ -191,19 +191,5 @@ Prática: usando templates
   <%= adm %>
   <% end -%>
 
-.. raw:: pdf
+4. Use o módulo no **node1**, execute o agente e confira o resultado no arquivo ``/etc/motd``.
 
- PageBreak
- 
-4. Use o módulo no **node1**, execute o agente e confira o resultado no arquivo ``/etc/motd``:
-
-::
-
-  Bem vindo a node1.puppet - CentOS 6.4
-  
-  Kernel: Linux 2.6.32
-  
-  Em caso de problemas, falar com:
-  Joao j@foo.com
-  Edu e@foo.com
-  Bia b@foo.com
