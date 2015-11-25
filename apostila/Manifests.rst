@@ -185,14 +185,14 @@ Prática: conhecendo os resources
     ip           => '192.168.56.99',
   }
   
-2. Crie um usuário chamado elvis com shell padrão ``/bin/false`` e grupo ``adm``.
+2. Crie um usuário chamado elvis com shell padrão ``/bin/csh`` e grupo ``adm``.
 
 .. code-block:: ruby
 
   user {'elvis':
-    shell => '/bin/false',
-    gid => 'adm',
-    home => '/home/elvis',
+    shell      => '/bin/csh',
+    gid        => 'adm',
+    home       => '/home/elvis',
     managehome => true,
   }
 
