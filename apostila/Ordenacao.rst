@@ -133,7 +133,7 @@ No exemplo abaixo, toda vez que o arquivo ``/etc/ssh/sshd_config`` divergir de `
 
   file { '/etc/ssh/sshd_config':
     ensure => file,
-    mode   => '600',
+    mode   => '0600',
     source => '/root/manifests/sshd_config',
     notify => Service['sshd'],
   }
