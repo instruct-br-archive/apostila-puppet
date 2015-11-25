@@ -6,7 +6,7 @@ Para saber qual configuração deve ser enviada a um agente, precisamos declarar
 
 Declarando nodes
 ----------------
-Sintaxe para se declarar um node a partir do master:
+Sintaxe para se declarar um node:
 
 .. code-block:: ruby
 
@@ -28,13 +28,11 @@ No exemplo acima, o agente que se identificar como ``node1.puppet`` receberá a 
 
 .. nota::
 
-  |nota| No Puppet 4.3 não é possível modularizar o arquivo ``site.pp`` usando a diretiva ``import``.
- 
-.. nota::
-
   |nota| **Classificação de nodes**
   
-  O Puppet fornece um recurso chamado *External Node Classifier* (ENC), que tem a finalidade de delegar o registro de nodes para uma entidade externa, evitando a configuração de longos manifests. Esse recurso será visto mais adiante. A documentação oficial está na página: https://docs.puppetlabs.com/guides/external_nodes.html
+  O Puppet fornece um recurso chamado *External Node Classifier* (ENC), que tem a finalidade de delegar o registro de nodes para uma entidade externa, evitando a configuração de longos manifests. Esse recurso será visto mais adiante.
+
+  A documentação oficial está em https://docs.puppetlabs.com/guides/external_nodes.html
 
 Nomes
 -----
@@ -70,25 +68,6 @@ Caso o Puppet Master não encontre nenhuma declaração de ``node`` explícita p
 
   node default {
   
-  }
-
-Herança
--------
-
-A partir do Puppet 4.0 não é possível utilizar o mecanismo de herança para a declaração de nodes através da diretiva ``inherits``. Sendo assim, o código abaixo não é mais suportado a partir do Puppet 4.0:
-
-.. code-block:: ruby
-
-  node 'base' {
-    package {'nano':
-      ensure => 'present',
-    }  
-  }
-  
-  node 'www1.dominio.com.br' inherits 'base' {
-    package {'vim':
-      ensure => 'present',
-    }
   }
 
 Prática
