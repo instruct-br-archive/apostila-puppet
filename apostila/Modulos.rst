@@ -45,7 +45,7 @@ Vejamos o resultado ao aplicar esse código:
   Finished catalog run in 0.03 seconds
 
 .. raw:: pdf
- 
+
  PageBreak
 
 
@@ -104,7 +104,7 @@ O resultado será o mesmo.
   A sintaxe ``class {'ntp': }`` é utilizada quando usamos classes que recebem parâmetros.
 
 .. raw:: pdf
- 
+
  PageBreak
 
 
@@ -215,6 +215,10 @@ Agora temos um módulo para configuração de NTP sempre a disposição!
   |nota| **Nome do serviço NTP**
 
   No Debian/Ubuntu, o nome do serviço é ``ntp``. No CentOS/Red Hat, o nome do serviço é ``ntpd``. Ajuste isso no arquivo ``init.pp`` do módulo ``ntp``.
+
+.. raw:: pdf
+
+ PageBreak
 
 Prática: arquivos de configuração em módulos
 --------------------------------------------
