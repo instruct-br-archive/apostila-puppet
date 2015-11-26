@@ -171,9 +171,7 @@ O tipo ``file`` tem diversos valores para o atributo ``ensure``: ``present``, ``
 Prática: conhecendo os resources
 --------------------------------
 
-.. dica::
-  
-  |dica| Para essa atividade, salve o conteúdo de cada exercício em um arquivo ``.pp`` e aplique-o usando o comando ``puppet apply``.
+Salve o conteúdo de cada exercício em um arquivo ``.pp`` e aplique-o usando o comando ``puppet apply``.
 
 1. Crie uma entrada no arquivo ``/etc/hosts``:
 
@@ -185,14 +183,13 @@ Prática: conhecendo os resources
     ip           => '192.168.56.99',
   }
   
-2. Crie um usuário chamado elvis com shell padrão ``/bin/csh`` e grupo ``adm``.
+2. Crie um usuário chamado elvis com shell padrão ``/bin/csh`` e grupo ``adm``:
 
 .. code-block:: ruby
 
   user {'elvis':
     shell      => '/bin/csh',
     gid        => 'adm',
-    home       => '/home/elvis',
     managehome => true,
   }
 
